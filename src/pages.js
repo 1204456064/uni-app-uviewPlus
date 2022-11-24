@@ -9,12 +9,14 @@ module.exports = {
         // 登录
         ...require('./page_config/router/login.js'),
         // tarbar栏
-        ...require('./page_config/index.js'),
+        ...require('./page_config/router/index.js'),
         // 设置
         ...require('./page_config/router/setting.js'),
+        // 动态表单
+        ...require('./page_config/router/component-form.js'),
     ],
     // tabBar
-    tabBar: require('./page_config/tabbar.js'),
+    tabBar: require('./page_config/global-config/tabbar.js'),
     // 全局样式
-    globalStyle: require('./page_config/global-style.js'),
+    globalStyle: require('./page_config/global-config/global-style.js'),
 };

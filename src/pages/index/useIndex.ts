@@ -25,7 +25,7 @@ export default function useIndex() {
                     label: '动态表单',
                     value: '动态表单',
                     icon: 'order',
-                    path: '/pages/demo/x-form/ordinary-form/index',
+                    path: '/pages/component-form/index',
                 },
             ],
         },
