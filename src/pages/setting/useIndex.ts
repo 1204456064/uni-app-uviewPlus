@@ -16,27 +16,10 @@ export default function useIndex() {
     // 退出提示内容
     const content = ref<string>('是否确认退出登录?');
 
-    // popupRef
-    const popupRef = ref();
-
     /**
      * 退出登录
      */
-    function showLogout() {
-        popupRef.value.open();
-    }
-
-    /**
-     * 取消
-     */
-    function close() {
-        popupRef.value.close();
-    }
-
-    /**
-     * 确认退出
-     */
-    async function confirm() {
+    async function showLogout() {
         const res = await HTTP.logout();
         if (res) {
             clearToken();
@@ -82,8 +65,5 @@ export default function useIndex() {
         showLogout,
         checkUpdate,
         toChangePassword,
-        popupRef,
-        confirm,
-        close,
     };
 }

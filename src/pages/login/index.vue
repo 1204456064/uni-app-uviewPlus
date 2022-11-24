@@ -8,7 +8,7 @@
 
         <view class="login-box">
             <view class="login__title">
-                <text>昊华气体</text>
+                <text>uviewPlus</text>
             </view>
             <u-form ref="formRef" :model="form" :rules="rules" label-width="120">
                 <u-form-item label="用户名" required prop="account"
@@ -20,22 +20,21 @@
             </u-form>
             <u-button plain type="primary" @click="login">登录</u-button>
         </view>
-        <!-- <uni-row>
-            <uni-col :span="8">
+        <u-row>
+            <u-col :span="4">
                 <image class="image-bottom" :src="imageList.order"></image>
-            </uni-col>
-            <uni-col :span="8">
+            </u-col>
+            <u-col :span="4">
                 <image class="image-bottom" :src="imageList.sale"></image>
-            </uni-col>
-            <uni-col :span="8">
+            </u-col>
+            <u-col :span="4">
                 <image class="image-bottom" :src="imageList.analysis"></image>
-            </uni-col>
-        </uni-row> -->
+            </u-col>
+        </u-row>
     </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import Login from '@/api/login/index';
 import useLogin from '@/pages/login/useLogin';
 import { saveStorage } from '@/utils/uni-storage';

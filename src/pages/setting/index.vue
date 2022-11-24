@@ -1,57 +1,47 @@
 <template>
     <view class="content">
-        <uni-row class="cell">
-            <uni-col :span="8"> <view class="cell-left">用户名</view></uni-col>
-            <uni-col :span="16">
-                <view class="cell-right">{{ userInfo.userName }}</view></uni-col
+        <u-row class="cell">
+            <u-col :span="4"> <view class="cell-left">用户名</view></u-col>
+            <u-col :span="8">
+                <view class="cell-right">{{ userInfo.userName }}</view></u-col
             >
-        </uni-row>
-        <uni-row class="cell">
-            <uni-col :span="8"> <view class="cell-left">账号</view></uni-col>
-            <uni-col :span="16">
-                <view class="cell-right">{{ userInfo.account }}</view></uni-col
+        </u-row>
+        <u-row class="cell">
+            <u-col :span="4"> <view class="cell-left">账号</view></u-col>
+            <u-col :span="8">
+                <view class="cell-right">{{ userInfo.account }}</view></u-col
             >
-        </uni-row>
-        <uni-row class="cell">
-            <uni-col :span="8"> <view class="cell-left">角色</view></uni-col>
-            <uni-col :span="16">
-                <view class="cell-right">{{ userInfo.roles }}</view></uni-col
+        </u-row>
+        <u-row class="cell">
+            <u-col :span="4"> <view class="cell-left">角色</view></u-col>
+            <u-col :span="8">
+                <view class="cell-right">{{ userInfo.roles }}</view></u-col
             >
-        </uni-row>
-        <uni-row class="cell" @click="toChangePassword">
-            <uni-col :span="8"> <view class="cell-left">修改密码</view></uni-col>
-            <uni-col :offset="14" :span="2">
+        </u-row>
+        <u-row class="cell" @click="toChangePassword">
+            <u-col :span="4"> <view class="cell-left">修改密码</view></u-col>
+            <u-col :offset="7" :span="1">
                 <view class="cell-right"
                     ><uni-icons type="forward" color="rgb(214, 215, 217)" size="30"></uni-icons></view
-            ></uni-col>
-        </uni-row>
-        <uni-row class="cell">
-            <uni-col :span="8"> <view class="info-title">应用信息</view></uni-col>
-        </uni-row>
-        <uni-row class="cell">
-            <uni-col :span="8"> <view class="cell-left" @click="checkUpdate">更新版本</view></uni-col>
-        </uni-row>
-        <uni-row class="cell">
-            <uni-col :span="8"> <view class="cell-left">应用版本</view></uni-col>
-        </uni-row>
-        <uni-popup ref="popupRef" type="dialog">
-            <uni-popup-dialog
-                mode="base"
-                :content="content"
-                title="温馨提示"
-                :before-close="true"
-                type="success"
-                @close="close"
-                @confirm="confirm"
-            ></uni-popup-dialog>
-        </uni-popup>
-        <button class="action-button" type="warn" @click="showLogout">退出登录</button>
+            ></u-col>
+        </u-row>
+        <u-row class="cell">
+            <u-col :span="4"> <view class="info-title">应用信息</view></u-col>
+        </u-row>
+        <u-row class="cell">
+            <u-col :span="4"> <view class="cell-left" @click="checkUpdate">更新版本</view></u-col>
+        </u-row>
+        <u-row class="cell">
+            <u-col :span="4"> <view class="cell-left">应用版本</view></u-col>
+        </u-row>
+
+        <u-button class="action-button" type="error" @click="showLogout">退出登录</u-button>
     </view>
 </template>
 
 <script lang="ts" setup>
 import useIndex from './useIndex';
-const { userInfo, content, showLogout, checkUpdate, toChangePassword, popupRef, confirm, close } = useIndex();
+const { userInfo, content, showLogout, checkUpdate, toChangePassword } = useIndex();
 </script>
 
 <style lang="scss" scoped>

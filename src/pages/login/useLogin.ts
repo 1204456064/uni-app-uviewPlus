@@ -33,7 +33,7 @@ export default function useLogin() {
                 errorMessage: '请输入用户名',
             },
         ],
-        password:  [
+        password: [
             {
                 required: true,
                 errorMessage: '请输入密码',

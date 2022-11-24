@@ -6,13 +6,13 @@
             >
             <view class="menu__menu-wrap">
                 <view v-for="sub in menu.subMenu" :key="sub.label" class="menu__submenu" @click="navigateTo(sub)"
-                    ><uni-icons
+                    ><u-icon
                         class="menu__icon"
                         color="#fff"
                         custom-prefix="iconfont"
-                        :type="sub.icon"
+                        :name="sub.icon"
                         size="60rpx"
-                    ></uni-icons
+                    ></u-icon
                     ><view class="menu__sub-label">
                         <text>
                             {{ sub.label }}
