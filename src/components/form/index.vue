@@ -1,11 +1,8 @@
 <template>
     <view class="view-wrap">
         <u-form ref="formRef" :model="form" :rules="rules" :label-width="labelWidth">
-            <!-- <u-form-item label="条码号" prop="cylinderCode" required="true">
-                <u-input v-model="form.cylinderCode"></u-input>
-            </u-form-item> -->
             <view v-for="(item, index) in componentList" :key="index">
-                <u-form-item :label="item.label" :prop="item.prop" :required="item.rules">
+                <u-form-item :label="item.label" :prop="item.prop" :required="item.rules ? true : false">
                     <component
                         :is="components[item.type]"
                         :form-item="item"

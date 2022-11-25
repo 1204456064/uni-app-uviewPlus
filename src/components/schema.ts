@@ -1,7 +1,7 @@
 export interface FormItem {
     prop: string;
     label: string;
-    type: string;
+    type: 'BaseInput' | 'BaseSelect';
     attribute?: {
         [key: string]: string | boolean | number;
     };

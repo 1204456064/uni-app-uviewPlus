@@ -19,7 +19,7 @@ const props = withDefaults(
             return {
                 prop: '',
                 label: '',
-                type: '',
+                type: 'BaseInput',
             };
         },
     }
