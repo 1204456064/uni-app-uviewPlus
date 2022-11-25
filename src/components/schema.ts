@@ -1,5 +1,3 @@
-import { unknownType } from '@/utils/types';
-
 export interface FormItem {
     prop: string;
     label: string;
@@ -9,6 +7,7 @@ export interface FormItem {
     };
     defaultValue?: defaultValueCheck;
     rules?: rulesItemCheck;
+    slots?: slotsCheck;
 }
 
 //默认值类型
@@ -27,4 +26,12 @@ export interface rulesCheck {
 // 表单项rules的校验规则类型
 export interface rulesItemCheck {
     [key: string]: string | boolean | number | string[];
+}
+
+// 输入框插槽
+export interface slotsCheck {
+    slotType: 'suffix' | 'prefix';
+    renderType: 'text';
+    content: string;
+    buttonFunction?: () => void;
 }
