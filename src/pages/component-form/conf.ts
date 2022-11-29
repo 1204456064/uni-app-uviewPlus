@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { FormItem } from '@/components/schema';
+import dictionary from '@/api/dictionary';
 
 export default function conf() {
     const labelWidth = 200;
@@ -10,7 +11,7 @@ export default function conf() {
             label: '输入框1',
             type: 'BaseInput',
             attribute: { placeholder: '请输入输入框1', border: 'none' },
-            rules: { required: true, message: '请输入输入框1' },
+            rules: [{ required: true, message: '请输入输入框1' }],
             slots: {
                 slotType: 'suffix',
                 renderType: 'text',
@@ -30,15 +31,30 @@ export default function conf() {
         },
         {
             prop: 'cylinderCode2',
-            label: '下拉容积',
+            label: '自定义下拉',
             type: 'BaseSelect',
             attribute: { placeholder: '请选择容积' },
+            options: [
+                {
+                    label: '自定义下拉1',
+                    value: 1,
+                },
+                {
+                    label: '自定义下拉2',
+                    value: 2,
+                },
+            ],
+            rules: [{ required: true, message: '请选择写死下拉' }],
+            labelField: 'cylinderCode2Label',
+            defaultValue: 1,
         },
         {
-            prop: 'cylinderCode2',
-            label: '下拉容积',
+            prop: 'cylinderCode3',
+            label: 'api下拉',
             type: 'BaseSelect',
-            attribute: { placeholder: '请选择容积' },
+            attribute: { placeholder: '请选择api下拉' },
+            rules: [{ required: true, message: '请选择api下拉' }],
+            selectApi: dictionary.getInspectUnitList,
         },
     ];
 

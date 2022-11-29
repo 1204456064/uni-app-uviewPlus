@@ -1,10 +1,10 @@
 <template>
     <view class="view-wrap login">
-        <uni-row>
-            <uni-col :span="24">
+        <u-row>
+            <u-col :span="12">
                 <image class="image-top" :src="imageList.cloud"></image>
-            </uni-col>
-        </uni-row>
+            </u-col>
+        </u-row>
 
         <view class="login-box">
             <view class="login__title">

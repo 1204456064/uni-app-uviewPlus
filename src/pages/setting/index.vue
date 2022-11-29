@@ -21,8 +21,8 @@
         <u-row class="cell" @click="toChangePassword">
             <u-col :span="4"> <view class="cell-left">修改密码</view></u-col>
             <u-col :offset="7" :span="1">
-                <view class="cell-right"
-                    ><uni-icons type="forward" color="rgb(214, 215, 217)" size="30"></uni-icons></view
+                <view class="cell-right-icon"
+                    ><u-icon name="arrow-right" color="rgb(214, 215, 217)" size="60"></u-icon></view
             ></u-col>
         </u-row>
         <u-row class="cell">
@@ -41,7 +41,7 @@
 
 <script lang="ts" setup>
 import useIndex from './useIndex';
-const { userInfo, content, showLogout, checkUpdate, toChangePassword } = useIndex();
+const { userInfo, showLogout, checkUpdate, toChangePassword } = useIndex();
 </script>
 
 <style lang="scss" scoped>
@@ -64,6 +64,13 @@ const { userInfo, content, showLogout, checkUpdate, toChangePassword } = useInde
     height: 100rpx;
     line-height: 100rpx;
     text-align: right;
+}
+
+.cell-right-icon {
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .info-title {

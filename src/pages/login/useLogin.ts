@@ -30,13 +30,13 @@ export default function useLogin() {
         account: [
             {
                 required: true,
-                errorMessage: '请输入用户名',
+                message: '请输入用户名',
             },
         ],
         password: [
             {
                 required: true,
-                errorMessage: '请输入密码',
+                message: '请输入密码',
             },
         ],
     });

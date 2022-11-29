@@ -8,6 +8,7 @@
                         :form-item="item"
                         class="compon"
                         @handle-emit="handleEmit"
+                        @handle-select="handleSelect"
                     ></component>
                 </u-form-item>
             </view>
@@ -33,7 +34,7 @@ const props = withDefaults(
 async function valid() {
     await formRef.value.validate();
 }
-const { componentList, form, rules, formRef, handleEmit } = useForm(props);
+const { componentList, form, rules, formRef, handleEmit, handleSelect } = useForm(props);
 
 defineExpose({
     updateValue(item: { value: string | number; formItem: FormItem }) {},

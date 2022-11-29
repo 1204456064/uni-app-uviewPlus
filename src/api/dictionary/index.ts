@@ -12,9 +12,9 @@ export const getDictionaryListByKey = (dictKey: string) => {
  */
 export default {
     /**
-     * 字典表 - 检验单位下拉
+     * 字典表 - 容器容积下拉
      */
-    getInspectUnitList: () => getDictionaryListByKey('jydw'),
+    getInspectUnitList: () => getDictionaryListByKey('rqrj'),
     /**
      * 字典表 - 维修单位下拉
      */

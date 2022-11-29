@@ -1,5 +1,6 @@
-import { defineAsyncComponent } from 'vue';
+import { BaseInput } from './input';
+import { BaseSelect } from './select';
 export const components: any = {
-    BaseInput: defineAsyncComponent(() => import('@/components/input/index.vue')),
-    BaseSelect: defineAsyncComponent(() => import('@/components/select/index.vue')),
+    BaseInput: BaseInput,
+    BaseSelect: BaseSelect,
 };

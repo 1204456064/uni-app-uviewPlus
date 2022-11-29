@@ -1,42 +1,31 @@
 <template>
     <view class="view-wrap">
         <view>
-            <uni-forms ref="formRef" :label-width="100" :model-value="form" :rules="rules">
-                <uni-forms-item label="原始密码" required name="oldPassword"
-                    ><uni-easyinput v-model="form.oldPassword" type="text" placeholder="请输入用户名"
-                /></uni-forms-item>
-                <uni-forms-item label="新设密码" required name="newPassword"
-                    ><uni-easyinput v-model="form.newPassword" type="password" placeholder="请输入密码"
-                /></uni-forms-item>
-                <uni-forms-item label="确认新密码" required name="confirmNewPassword"
-                    ><uni-easyinput v-model="form.confirmNewPassword" type="password" placeholder="请输入密码"
-                /></uni-forms-item>
-            </uni-forms>
-            <button type="primary" @click="submit">提交</button>
+            <u-form ref="formRef" :label-width="200" :model="form" :rules="rules">
+                <u-form-item label="原始密码" required prop="oldPassword"
+                    ><u-input v-model="form.oldPassword" type="text" placeholder="请输入用户名"
+                /></u-form-item>
+                <u-form-item label="新设密码" required prop="newPassword"
+                    ><u-input v-model="form.newPassword" type="password" placeholder="请输入密码"
+                /></u-form-item>
+                <u-form-item label="确认新密码" required prop="confirmNewPassword"
+                    ><u-input v-model="form.confirmNewPassword" type="password" placeholder="请输入密码"
+                /></u-form-item>
+            </u-form>
+            <u-button type="primary" @click="submit">提交</u-button>
         </view>
     </view>
 </template>
 <script setup lang="ts">
 import common from '@/api/common';
 import { clearToken, getStorage } from '@/utils/uni-storage';
-import { ref } from 'vue';
 import useChangePassword from './useChangePassword';
 import { showSuccessToastWithNavget } from '@/utils/messageTip';
 const { form, formRef, rules } = useChangePassword();
 
 async function submit() {
-    const validForm = ref<boolean>(false);
-    await formRef.value.validate((valid: boolean) => {
-        if (!valid) {
-            validForm.value = true;
-        } else {
-            validForm.value = false;
-        }
-    });
+    await formRef.value.validate();
 
-    if (!validForm.value) {
-        return;
-    }
     uni.showModal({
         title: '',
         content: '是否确认更改密码？',

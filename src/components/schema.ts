@@ -1,13 +1,21 @@
+import { unknownType } from '@/utils/types';
+
 export interface FormItem {
     prop: string;
+    labelField?: string | number;
     label: string;
     type: 'BaseInput' | 'BaseSelect';
     attribute?: {
         [key: string]: string | boolean | number;
     };
     defaultValue?: defaultValueCheck;
-    rules?: rulesItemCheck;
+    rules?: rulesItemCheck[];
     slots?: slotsCheck;
+    options?: { label: string | number; value: string | number }[];
+    selectApi?: ((params: { [key: string]: string | boolean | number | object }) => Promise<unknownType>) | undefined;
+    selectParams?: {
+        [key: string]: string | boolean | number | object;
+    };
 }
 
 //默认值类型
@@ -20,7 +28,7 @@ export interface formCheck {
 
 // 表单rules校验规则类型
 export interface rulesCheck {
-    [key: string]: rulesItemCheck;
+    [key: string]: rulesItemCheck[];
 }
 
 // 表单项rules的校验规则类型
@@ -34,4 +42,9 @@ export interface slotsCheck {
     renderType: 'text';
     content: string;
     buttonFunction?: () => void;
+}
+
+// 下拉解构
+export interface baseSelecCheck {
+    data: { [key: string]: string | number }[];
 }
