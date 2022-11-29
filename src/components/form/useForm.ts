@@ -1,11 +1,11 @@
-import { formCheck, rulesCheck, rulesItemCheck } from './../schema';
+import { formCheck, rulesCheck } from './../schema';
 import { onBeforeMount, ref } from 'vue';
 import { FormItem } from '../schema';
 import { handleBaseInpput, handleBaseSelect } from './handleEmit';
 import { apiSelectType } from '@/utils/types';
 export default function useIndex(props: { schemaList: FormItem[] }) {
     // 渲染的组件列表
-    const componentList = ref<FormItem[]>([]);
+    const renderComponentList = ref<FormItem[]>([]);
 
     // 表单ref
     const formRef = ref();
@@ -40,8 +40,6 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         if (item.formItem.type === 'BaseInput') {
             handleBaseInpput(form.value, item);
         }
-        if (item.formItem.type === 'BaseSelect') {
-        }
     }
 
     function handleSelect(item: { value: apiSelectType; formItem: FormItem }) {
@@ -49,12 +47,13 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     }
 
     onBeforeMount(() => {
-        componentList.value = props.schemaList;
+        renderComponentList.value = props.schemaList;
+        console.log(renderComponentList.value);
 
         initForm();
     });
     return {
-        componentList,
+        renderComponentList,
         initForm,
         form,
         rules,

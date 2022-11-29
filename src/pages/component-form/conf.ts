@@ -7,6 +7,13 @@ export default function conf() {
 
     const schemaList: FormItem[] = [
         {
+            prop: 'cylinderCode111',
+            label: '输入框12',
+            type: 'ScanInput',
+            attribute: { placeholder: '请输入输入框1', border: 'none' },
+            rules: [{ required: true, message: '请输入输入框1' }],
+        },
+        {
             prop: 'cylinderCode',
             label: '输入框1',
             type: 'BaseInput',

@@ -1,7 +1,7 @@
 <template>
     <view class="view-wrap">
         <u-form ref="formRef" :model="form" :rules="rules" :label-width="labelWidth">
-            <view v-for="(item, index) in componentList" :key="index">
+            <view v-for="item in renderComponentList" :key="item.prop">
                 <u-form-item :label="item.label" :prop="item.prop" :required="item.rules ? true : false">
                     <component
                         :is="components[item.type]"
@@ -43,7 +43,7 @@ async function validForm() {
         });
     return valid.value;
 }
-const { componentList, form, rules, formRef, handleEmit, handleSelect } = useForm(props);
+const { renderComponentList, form, rules, formRef, handleEmit, handleSelect } = useForm(props);
 
 defineExpose({
     updateValue(item: { value: string | number; formItem: FormItem }) {},

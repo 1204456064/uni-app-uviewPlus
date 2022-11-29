@@ -4,7 +4,7 @@ export interface FormItem {
     prop: string;
     labelField?: string | number;
     label: string;
-    type: 'BaseInput' | 'BaseSelect';
+    type: 'BaseInput' | 'BaseSelect' | 'ScanInput';
     attribute?: {
         [key: string]: string | boolean | number;
     };
