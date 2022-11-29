@@ -5,6 +5,7 @@
                 <u-form-item :label="item.label" :prop="item.prop" :required="item.rules ? true : false">
                     <component
                         :is="components[item.type]"
+                        :ref="setComponentRef"
                         :form-item="item"
                         class="compon"
                         @handle-emit="handleEmit"
@@ -44,7 +45,8 @@ async function validForm() {
         });
     return valid.value;
 }
-const { renderComponentList, form, rules, formRef, handleEmit, handleSelect, handleSuccess } = useForm(props);
+const { renderComponentList, form, rules, formRef, handleEmit, handleSelect, handleSuccess, setComponentRef } =
+    useForm(props);
 
 defineExpose({
     updateValue(item: { value: string | number; formItem: FormItem }) {},

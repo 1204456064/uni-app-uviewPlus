@@ -62,8 +62,9 @@ defineExpose({
     getBaseSelectValue() {
         return selectValue.value;
     },
-    setBaseInputValue(val: string | number) {
+    setValue(val: string | number) {
         selectValue.value = val;
+        selectLabel.value = val;
     },
 });
 </script>
