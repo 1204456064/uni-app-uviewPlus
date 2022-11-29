@@ -44,6 +44,33 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
+     *  下拉数据处理
+     */
+    async function handleSelectList() {
+        // selectApi为请求接口下拉
+        // options 为自定义下拉
+        if (props.formItem.selectApi) {
+            if (props.formItem.selectParams) {
+                const res: baseSelecCheck = await props.formItem.selectApi(props.formItem.selectParams);
+                if (res) {
+                    selectList.value = [res.data];
+                } else {
+                    showToast('数据格式有误');
+                }
+            } else {
+                const res: baseSelecCheck = await props.formItem.selectApi({});
+                if (res) {
+                    selectList.value = [res.data];
+                } else {
+                    showToast('数据格式有误');
+                }
+            }
+        } else if (props.formItem.options) {
+            selectList.value = [props.formItem.options];
+        }
+    }
+
+    /**
      * 清除按钮
      */
     function clearValue() {
@@ -66,7 +93,6 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         // 判断有无默认值
         if (props.formItem.defaultValue) {
             await handleSelectList();
-            console.log(selectList.value[0]);
 
             selectList.value[0].forEach((item: { [key: string]: string | number }) => {
                 if (item.value === props.formItem.defaultValue) {
@@ -94,34 +120,6 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             formItem: props.formItem,
         });
     });
-
-    /**
-     *  下拉数据处理
-     */
-    async function handleSelectList() {
-        // selectApi为请求接口下拉
-        // options 为自定义下拉
-        if (props.formItem.selectApi) {
-            if (props.formItem.selectParams) {
-                const res: baseSelecCheck = await props.formItem.selectApi(props.formItem.selectParams);
-                if (res) {
-                    selectList.value = [res.data];
-                } else {
-                    showToast('数据格式有误');
-                }
-            } else {
-                const res: baseSelecCheck = await props.formItem.selectApi({});
-                if (res) {
-                    selectList.value = [res.data];
-                    console.log(selectList.value);
-                } else {
-                    showToast('数据格式有误');
-                }
-            }
-        } else if (props.formItem.options) {
-            selectList.value = [props.formItem.options];
-        }
-    }
 
     return {
         selectValue,

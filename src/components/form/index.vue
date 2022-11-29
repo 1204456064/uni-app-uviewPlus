@@ -13,13 +13,13 @@
                 </u-form-item>
             </view>
         </u-form>
-        <u-button type="primary" @click="valid">校验</u-button>
     </view>
 </template>
 <script setup lang="ts">
 import useForm from './useForm';
 import { FormItem } from '../schema';
 import { components } from '@/components/index';
+import { ref } from 'vue';
 
 const props = withDefaults(
     defineProps<{
@@ -31,13 +31,26 @@ const props = withDefaults(
         labelWidth: 200,
     }
 );
-async function valid() {
-    await formRef.value.validate();
+async function validForm() {
+    const valid = ref<boolean>(false);
+    await formRef.value
+        .validate()
+        .then(() => {
+            valid.value = true;
+        })
+        .catch(() => {
+            valid.value = false;
+        });
+    return valid.value;
 }
 const { componentList, form, rules, formRef, handleEmit, handleSelect } = useForm(props);
 
 defineExpose({
     updateValue(item: { value: string | number; formItem: FormItem }) {},
+
+    async validForm() {
+        return await validForm();
+    },
 });
 </script>
 <style lang="scss" scoped>
