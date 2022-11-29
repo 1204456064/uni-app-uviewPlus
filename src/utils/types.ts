@@ -7,7 +7,7 @@ export type unknownType = any;
  */
 export interface requestObj {
     code: number;
-    data: object | Array<any>;
+    data: object | Array<unknownType>;
     message: string;
 }
 

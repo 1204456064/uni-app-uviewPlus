@@ -46,9 +46,16 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         handleBaseSelect(form.value, item);
     }
 
+    function handleSuccess(item: { value: object; formItem: FormItem }) {
+        form.value = {
+            ...form.value,
+            ...item.value,
+        };
+        console.log(form.value);
+    }
+
     onBeforeMount(() => {
         renderComponentList.value = props.schemaList;
-        console.log(renderComponentList.value);
 
         initForm();
     });
@@ -60,5 +67,6 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         formRef,
         handleEmit,
         handleSelect,
+        handleSuccess,
     };
 }

@@ -13,8 +13,14 @@ export interface FormItem {
     slots?: slotsCheck;
     options?: { label: string | number; value: string | number }[];
     selectApi?: ((params: { [key: string]: string | boolean | number | object }) => Promise<unknownType>) | undefined;
+    scanInputApi?:
+        | ((params: { [key: string]: string | boolean | number | object }) => Promise<unknownType>)
+        | undefined;
     selectParams?: {
         [key: string]: string | boolean | number | object;
+    };
+    scanInputParmas?: {
+        [key: string]: string | number;
     };
 }
 

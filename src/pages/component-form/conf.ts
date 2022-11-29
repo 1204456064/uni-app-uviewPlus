@@ -1,20 +1,28 @@
-import { ref } from 'vue';
 import { FormItem } from '@/components/schema';
 import dictionary from '@/api/dictionary';
+import common from '@/api/common';
 
 export default function conf() {
     const labelWidth = 200;
 
     const schemaList: FormItem[] = [
         {
-            prop: 'cylinderCode111',
-            label: '输入框12',
+            prop: 'cylinderCode',
+            label: '条码号',
             type: 'ScanInput',
+            attribute: { placeholder: '请输入输入框1', border: 'none' },
+            rules: [{ required: true, message: '请输入输入框1' }],
+            scanInputApi: common.selectByCode,
+        },
+        {
+            prop: 'cylinderNum',
+            label: '容器编码',
+            type: 'BaseInput',
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
         },
         {
-            prop: 'cylinderCode',
+            prop: 'cylinderCode222',
             label: '输入框1',
             type: 'BaseInput',
             attribute: { placeholder: '请输入输入框1', border: 'none' },
