@@ -31,10 +31,7 @@ const emit = defineEmits<{
 
 const { inputValue, changeInputValue } = useIndex(props, emit);
 defineExpose({
-    getBaseInputValue() {
-        return inputValue.value;
-    },
-    setBaseInputValue(val: string | number) {
+    setScanInputValue(val: string | number) {
         inputValue.value = val;
     },
 });
