@@ -1,6 +1,6 @@
 import { showToast } from '@/utils/messageTip';
 import { apiSelectType } from '@/utils/types';
-import { onBeforeMount, ref } from 'vue';
+import { nextTick, onBeforeMount, ref } from 'vue';
 import { baseSelecCheck, defaultValueCheck, FormItem } from '../schema';
 export default function useIndex(props: { formItem: FormItem }, emit: Function) {
     // 输入框的值
@@ -19,16 +19,19 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
 
     const showClear = ref<string | boolean | number>(true);
 
+    const defaultIndex = ref<number[]>([]);
+
+    const pickerRef = ref();
+
     async function open() {
         show.value = true;
         loading.value = true;
         await handleSelectList();
+        pickerRef.value.setIndexs(defaultIndex.value);
         loading.value = false;
     }
 
     function cancel() {
-        selectList.value = [];
-
         show.value = false;
     }
 
@@ -37,9 +40,23 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      * @param e 点击确认后的回调，参数为indexs下标、value选中的项、values数据源
      */
     function confirm(e: { indexs: number[]; value: apiSelectType[]; values: apiSelectType[] }) {
-        selectValue.value = e.value[0].value;
-        selectLabel.value = e.value[0].label;
+        if (!e.value[0]) {
+            fixSelectBug();
+            return;
+        }
+
         emit('handleSelect', { value: e.value[0], formItem: props.formItem });
+        handleSelectIndex(e.value[0].value);
+        cancel();
+    }
+
+    /**
+     * uviewPlus的bug
+     * 当清空第一项时，在继续选择第一项会报错,这时候的回调参数为undefined，需特殊处理
+     */
+    function fixSelectBug() {
+        emit('handleSelect', { value: selectList.value[0][0], formItem: props.formItem });
+        handleSelectIndex(selectList.value[0][0].value);
         cancel();
     }
 
@@ -70,13 +87,24 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         }
     }
 
+    function handleSelectIndex(value: string | number | boolean | object) {
+        defaultIndex.value = [];
+        selectList.value[0].forEach((item: { [key: string]: string | number }, index: number) => {
+            if (item.value === value) {
+                selectLabel.value = item.label;
+                defaultIndex.value.push(index);
+            }
+        });
+        selectValue.value = value;
+    }
+
     /**
      * 清除按钮
      */
     function clearValue() {
         selectLabel.value = '';
         selectValue.value = '';
-        selectList.value = [];
+        defaultIndex.value = [];
         // 初始化回调
         emit('handleSelect', {
             value: { label: selectLabel.value, value: selectValue.value },
@@ -93,13 +121,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         // 判断有无默认值
         if (props.formItem.defaultValue) {
             await handleSelectList();
-
-            selectList.value[0].forEach((item: { [key: string]: string | number }) => {
-                if (item.value === props.formItem.defaultValue) {
-                    selectLabel.value = item.label;
-                }
-            });
-            selectValue.value = props.formItem.defaultValue;
+            handleSelectIndex(props.formItem.defaultValue);
         } else {
             selectValue.value = '';
         }
@@ -133,5 +155,9 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         loading,
         showClear,
         clearValue,
+        handleSelectList,
+        defaultIndex,
+        pickerRef,
+        handleSelectIndex,
     };
 }

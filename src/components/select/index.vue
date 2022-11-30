@@ -12,9 +12,10 @@
             <view v-if="showClear"> <u-icon name="close-circle-fill" size="40" @click="clearValue"></u-icon> </view>
         </view>
         <u-picker
+            v-bind="formItem.attribute"
+            ref="pickerRef"
             :show="show"
             :columns="selectList"
-            v-bind="formItem.attribute"
             key-name="label"
             :loading="loading"
             @cancel="cancel"
@@ -56,15 +57,23 @@ const {
     loading,
     clearValue,
     showClear,
+    handleSelectList,
+    pickerRef,
+    handleSelectIndex,
 } = useIndex(props, emit);
 
 defineExpose({
-    getBaseSelectValue() {
-        return selectValue.value;
+    getProp() {
+        return props.formItem.prop;
     },
-    setValue(val: string | number) {
-        selectValue.value = val;
-        selectLabel.value = val;
+    async setValue(val: string | number) {
+        if (val === '') {
+            selectValue.value = val;
+            selectLabel.value = val;
+            return;
+        }
+        await handleSelectList();
+        handleSelectIndex(val);
     },
 });
 </script>

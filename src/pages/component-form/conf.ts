@@ -22,7 +22,7 @@ export default function conf() {
             rules: [{ required: true, message: '请输入输入框1' }],
         },
         {
-            prop: 'cylinderCode222',
+            prop: 'valveMaterialLabel',
             label: '输入框1',
             type: 'BaseInput',
             attribute: { placeholder: '请输入输入框1', border: 'none' },
@@ -34,7 +34,7 @@ export default function conf() {
             },
         },
         {
-            prop: 'cylinderCode1',
+            prop: 'cylinderTypeLabel',
             label: '输入框2',
             type: 'BaseInput',
             attribute: { placeholder: '请输入输入框2', border: 'none' },
@@ -45,7 +45,7 @@ export default function conf() {
             },
         },
         {
-            prop: 'cylinderCode2',
+            prop: 'currentPhaseLabel',
             label: '自定义下拉',
             type: 'BaseSelect',
             attribute: { placeholder: '请选择容积' },
@@ -64,12 +64,13 @@ export default function conf() {
             defaultValue: 1,
         },
         {
-            prop: 'cylinderCode3',
+            prop: 'cylinderVolume',
             label: 'api下拉',
             type: 'BaseSelect',
             attribute: { placeholder: '请选择api下拉' },
             rules: [{ required: true, message: '请选择api下拉' }],
             selectApi: dictionary.getInspectUnitList,
+            defaultValue: '37a6113e8469d0474b9d4d90286d3e83',
         },
     ];
 

@@ -1,5 +1,5 @@
 import { formCheck, rulesCheck } from './../schema';
-import { onBeforeMount, ref } from 'vue';
+import { nextTick, onBeforeMount, ref } from 'vue';
 import { FormItem } from '../schema';
 import { handleBaseInpput, handleBaseSelect } from './handleEmit';
 import { apiSelectType, unknownType } from '@/utils/types';
@@ -16,10 +16,13 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     // 表单的校验项
     const rules = ref<rulesCheck>({});
 
+    // const componentRef = ref({});
     let componentRef: unknownType = [];
 
     function setComponentRef(el: unknownType) {
-        componentRef.push(el);
+        if (el) {
+            componentRef.push(el);
+        }
     }
 
     /**
@@ -57,16 +60,24 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
             ...form.value,
             ...item.value,
         };
-        console.log(componentRef);
-        console.log(componentRef.length);
-        for (let i = 0; i < componentRef.length; i++) {
-            componentRef[i].setValue('1');
+        setComponentData();
+        componentRef = [];
+    }
+
+    function setComponentData() {
+        let sign = 0;
+
+        if (componentRef.length > props.schemaList.length) {
+            sign = props.schemaList.length;
+        } else {
+            sign = componentRef.length;
         }
-        // componentRef[0].setValue('qweqw');
-        // componentRef.formEach((item: unknownType) => {
-        //     item.setValue('1');
-        // });
-        console.log(form.value);
+
+        for (let i = 0; i < sign; i++) {
+            if (componentRef[i].getProp() && form.value[componentRef[i].getProp()]) {
+                componentRef[i].setValue(form.value[componentRef[i].getProp()]);
+            }
+        }
     }
 
     onBeforeMount(() => {

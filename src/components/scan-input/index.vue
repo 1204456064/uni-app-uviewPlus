@@ -41,6 +41,9 @@ const { inputValue, changeInputValue, confirm, focus, handlePDAScan } = useIndex
 useScan(handlePDAScan);
 
 defineExpose({
+    getProp() {
+        return props.formItem.prop;
+    },
     setValue(val: string | number) {
         inputValue.value = val;
     },

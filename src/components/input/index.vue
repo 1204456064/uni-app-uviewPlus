@@ -31,6 +31,9 @@ const emit = defineEmits<{
 
 const { inputValue, changeInputValue, textContent, renderSuffix } = useIndex(props, emit);
 defineExpose({
+    getProp() {
+        return props.formItem.prop;
+    },
     setValue(val: string | number) {
         inputValue.value = val;
     },
