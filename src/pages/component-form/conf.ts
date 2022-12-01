@@ -13,6 +13,8 @@ export default function conf() {
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
             scanInputApi: common.selectByCode,
+            codeScanningMode: 'commonScanningCodeAndClear',
+            defaultScan: true,
         },
         {
             prop: 'cylinderCode2',
@@ -21,7 +23,6 @@ export default function conf() {
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
             scanInputApi: common.selectByCode,
-            defaultScan: true,
         },
         {
             prop: 'cylinderNum',
@@ -54,7 +55,7 @@ export default function conf() {
             },
         },
         {
-            prop: 'currentPhaseLabel',
+            prop: 'addTime',
             label: '自定义下拉',
             type: 'BaseSelect',
             attribute: { placeholder: '请选择容积' },
@@ -70,7 +71,6 @@ export default function conf() {
             ],
             rules: [{ required: true, message: '请选择写死下拉' }],
             labelField: 'cylinderCode2Label',
-            defaultValue: 1,
         },
         {
             prop: 'cylinderVolume',

@@ -33,10 +33,15 @@ const props = withDefaults(
         },
     }
 );
-
+/**
+ * handleEmit 双向绑定回调
+ * handleScanInputSuccess 扫码成功回调，返回一个对象，对象的属性value为请求成功后的参数，formItem为当前表单项的配置
+ * handleScanInputFail 扫码失败后的回调
+ */
 const emit = defineEmits<{
     (e: 'handleEmit', val: string | number): void;
-    (e: 'handleSuccess', val: object | Array<object>): void;
+    (e: 'handleScanInputSuccess', val: object | Array<object>): void;
+    (e: 'handleScanInputFail', val: object | Array<object>): void;
 }>();
 
 const { inputValue, changeInputValue, confirm, focus, handlePDAScan, focusFunction, blurFunction, handleScan } =

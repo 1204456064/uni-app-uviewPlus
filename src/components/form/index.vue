@@ -10,7 +10,8 @@
                         class="compon"
                         @handle-emit="handleEmit"
                         @handle-select="handleSelect"
-                        @handle-success="handleSuccess"
+                        @handle-scan-input-success="handleScanInputSuccess"
+                        @handle-scan-input-fail="handleScanInputFail"
                     ></component>
                 </u-form-item>
             </view>
@@ -45,8 +46,17 @@ async function validForm() {
         });
     return valid.value;
 }
-const { renderComponentList, form, rules, formRef, handleEmit, handleSelect, handleSuccess, setComponentRef } =
-    useForm(props);
+const {
+    renderComponentList,
+    form,
+    rules,
+    formRef,
+    handleEmit,
+    handleSelect,
+    handleScanInputSuccess,
+    setComponentRef,
+    handleScanInputFail,
+} = useForm(props);
 
 defineExpose({
     updateValue(item: { value: string | number; formItem: FormItem }) {},

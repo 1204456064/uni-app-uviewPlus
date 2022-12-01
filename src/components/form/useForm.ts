@@ -55,7 +55,7 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         handleBaseSelect(form.value, item);
     }
 
-    function handleSuccess(item: { value: object; formItem: FormItem }) {
+    function handleScanInputSuccess(item: { value: object; formItem: FormItem }) {
         form.value = {
             ...form.value,
             ...item.value,
@@ -64,17 +64,43 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         componentRef = [];
     }
 
+    function handleScanInputFail(item: { reset: boolean; formItem: FormItem }) {
+        if (!item.reset) {
+            return;
+        }
+        // initForm();
+        // form.value = {
+        //     ...form.value,
+        //     cylinderCode: '',
+        // };
+        nextTick(() => {
+            resetForm();
+        });
+    }
+    function resetForm() {
+        let resetForm: formCheck = {};
+        props.schemaList.forEach((item: FormItem) => {
+            if (item.defaultValue) {
+                resetForm[`${item.prop}`] = item.defaultValue;
+            } else {
+                resetForm[`${item.prop}`] = '';
+            }
+        });
+
+        for (let i = 0; i < props.schemaList.length; i++) {
+            componentRef[i].setValue(resetForm[componentRef[i].getProp()]);
+        }
+    }
+
     function setComponentData() {
         let sign = 0;
-
-        if (componentRef.length > props.schemaList.length) {
-            sign = props.schemaList.length;
-        } else {
-            sign = componentRef.length;
-        }
+        sign = props.schemaList.length;
 
         for (let i = 0; i < sign; i++) {
             if (componentRef[i].getProp() && form.value[componentRef[i].getProp()]) {
+                console.log(form.value[componentRef[i].getProp()]);
+                console.log(componentRef[i].getProp());
+
                 componentRef[i].setValue(form.value[componentRef[i].getProp()]);
             }
         }
@@ -93,7 +119,8 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         formRef,
         handleEmit,
         handleSelect,
-        handleSuccess,
+        handleScanInputSuccess,
         setComponentRef,
+        handleScanInputFail,
     };
 }

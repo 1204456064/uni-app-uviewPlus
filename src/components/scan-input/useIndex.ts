@@ -1,3 +1,4 @@
+import { SCAN_MODE } from '@/constant';
 import { showToast } from '@/utils/messageTip';
 import { requestObj } from '@/utils/types';
 import { nextTick, onBeforeMount, ref } from 'vue';
@@ -25,6 +26,14 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
 
     // 用于记录当前表单是否可扫码
     const scanItem = ref<boolean>(false);
+
+    // 用来记录扫码模式
+    const scanMode = ref<
+        | 'commonScanningCode'
+        | 'commonScanningCodeAndClear'
+        | 'continuousScanningCode'
+        | 'continuousScanningCodeAndClear'
+    >('commonScanningCode');
 
     /**
      * 输入框的值改变后回调修改表单对应字段的值
@@ -78,12 +87,31 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
 
         parmas[`${props.formItem.prop}`] = code;
 
-        if (props.formItem.scanInputApi) {
-            const res: requestObj = await props.formItem.scanInputApi(parmas);
-            if (!res) {
-                return;
-            }
-            emit('handleSuccess', { value: res.data, formItem: props.formItem });
+        if (!props.formItem.scanInputApi) {
+            showToast('请先配置查询接口');
+            return;
+        }
+        const res: requestObj = await props.formItem.scanInputApi(parmas);
+        if (!res) {
+            handleScanError();
+            return;
+        }
+        emit('handleScanInputSuccess', { value: res.data, formItem: props.formItem });
+    }
+
+    /**
+     * 查询失败或者异常处理
+     * 根据不同的扫码模式进行不同的处理
+     */
+    function handleScanError() {
+        if (scanMode.value === SCAN_MODE.MODE_ONE) {
+            return;
+        }
+        if (scanMode.value === SCAN_MODE.MODE_TWO) {
+            scanItem.value = true;
+            emit('handleScanInputFail', { reset: true, formItem: props.formItem });
+            resetFocus();
+            return;
         }
     }
 
@@ -124,6 +152,8 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      */
     function resetFocus() {
         if (scanItem.value) {
+            console.log('我重置了');
+
             focus.value = false;
             nextTick(() => {
                 focus.value = true;
@@ -141,6 +171,10 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         if (props.formItem.defaultScan) {
             scanItem.value = true;
             focus.value = true;
+        }
+
+        if (props.formItem.codeScanningMode) {
+            scanMode.value = props.formItem.codeScanningMode;
         }
         // setTimeout(() => {
         //     // 3.6.2以后Hbuilder版本的hbuilder有bug未修复，第一次渲染页面时，input聚焦一闪而过，需要搞个定时器辅助一下
