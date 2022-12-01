@@ -1,8 +1,7 @@
 import { unknownType } from '@/utils/types';
 import { onMounted, ref, onUnmounted } from 'vue';
-import { FormItem } from '../schema';
 
-export default function useScan(handlePDAScan: (code: string) => void, scanItem: boolean) {
+export default function useScan(handlePDAScan: (code: string) => void) {
     // 原生对象
     const nativeMain = ref<unknownType>(null);
     // 接收器

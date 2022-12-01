@@ -10,7 +10,7 @@
             @blur="blurFunction"
         >
             <template #suffix>
-                <u-icon name="scan" size="60"></u-icon>
+                <u-icon name="scan" size="60" @click="handleScan"></u-icon>
             </template>
         </u-input>
     </view>
@@ -38,12 +38,11 @@ const emit = defineEmits<{
     (e: 'handleEmit', val: string | number): void;
     (e: 'handleSuccess', val: object | Array<object>): void;
 }>();
-const { inputValue, changeInputValue, confirm, focus, handlePDAScan, focusFunction, blurFunction, scanItem } = useIndex(
-    props,
-    emit
-);
 
-useScan(handlePDAScan, scanItem.value);
+const { inputValue, changeInputValue, confirm, focus, handlePDAScan, focusFunction, blurFunction, handleScan } =
+    useIndex(props, emit);
+
+useScan(handlePDAScan);
 
 defineExpose({
     getProp() {
