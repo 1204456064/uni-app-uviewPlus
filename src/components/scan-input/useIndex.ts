@@ -6,7 +6,17 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     // 输入框的值
     const inputValue = ref<string | number>('');
 
-    const focus = ref<boolean>(true);
+    const focus = ref<boolean>(false);
+
+    function focusFunction() {
+        scanItem.value = true;
+    }
+
+    function blurFunction() {
+        scanItem.value = false;
+    }
+
+    const scanItem = ref<boolean>(false);
 
     /**
      * 输入框的值改变后回调修改表单对应字段的值
@@ -30,9 +40,11 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      * @param code 扫码后返回的code
      */
     function handlePDAScan(code: string) {
+        if (!scanItem.value) {
+            return;
+        }
         inputValue.value = code;
-        emit('handleEmit', { value: code, formItem: props.formItem });
-
+        emit('handleEmit', { value: code, formItem: scanItem });
         searchCylinderCode(code);
     }
 
@@ -64,21 +76,36 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         }
     }
 
-    function resetFocus() {}
+    function resetFocus() {
+        if (props.formItem.defaultScan) {
+            // focusFunction(true);
+        }
+    }
 
     onBeforeMount(() => {
         // 判断有无默认值
         if (!props.formItem.defaultValue) {
             inputValue.value = '';
         }
+
+        // 判断有无默认值
+        if (props.formItem.defaultScan) {
+            scanItem.value = true;
+            focus.value = true;
+        }
+        // setTimeout(() => {
+        //     // Hbuilder版本的hbuilder有bug未修复，第一次渲染页面时，input聚焦一闪而过，需要搞个定时器辅助一下
+        //     // https://ask.dcloud.net.cn/question/153481 bug详情
+        //     resetFocus();
+        // }, 1000);
     });
 
     onMounted(() => {
-        setTimeout(() => {
-            // Hbuilder版本的hbuilder有bug未修复，第一次渲染页面时，input聚焦一闪而过，需要搞个定时器辅助一下
-            // https://ask.dcloud.net.cn/question/153481 bug详情
-            resetFocus();
-        }, 1000);
+        // setTimeout(() => {
+        //     // Hbuilder版本的hbuilder有bug未修复，第一次渲染页面时，input聚焦一闪而过，需要搞个定时器辅助一下
+        //     // https://ask.dcloud.net.cn/question/153481 bug详情
+        //     resetFocus();
+        // }, 1000);
     });
 
     return {
@@ -87,5 +114,8 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         confirm,
         focus,
         handlePDAScan,
+        scanItem,
+        focusFunction,
+        blurFunction,
     };
 }

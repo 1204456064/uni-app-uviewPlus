@@ -6,6 +6,8 @@
             v-bind="formItem.attribute"
             @confirm="confirm"
             @change="changeInputValue"
+            @focus="focusFunction"
+            @blur="blurFunction"
         >
             <template #suffix>
                 <u-icon name="scan" size="60"></u-icon>
@@ -36,9 +38,12 @@ const emit = defineEmits<{
     (e: 'handleEmit', val: string | number): void;
     (e: 'handleSuccess', val: object | Array<object>): void;
 }>();
-const { inputValue, changeInputValue, confirm, focus, handlePDAScan } = useIndex(props, emit);
+const { inputValue, changeInputValue, confirm, focus, handlePDAScan, focusFunction, blurFunction, scanItem } = useIndex(
+    props,
+    emit
+);
 
-useScan(handlePDAScan);
+useScan(handlePDAScan, scanItem.value);
 
 defineExpose({
     getProp() {

@@ -22,6 +22,7 @@ export interface FormItem {
     scanInputParmas?: {
         [key: string]: string | number;
     };
+    defaultScan?: boolean;
 }
 
 //默认值类型

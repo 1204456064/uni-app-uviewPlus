@@ -1,7 +1,8 @@
 import { unknownType } from '@/utils/types';
 import { onMounted, ref, onUnmounted } from 'vue';
+import { FormItem } from '../schema';
 
-export default function useScan(handlePDAScan: (code: string) => void) {
+export default function useScan(handlePDAScan: (code: string) => void, scanItem: boolean) {
     // 原生对象
     const nativeMain = ref<unknownType>(null);
     // 接收器
@@ -15,7 +16,6 @@ export default function useScan(handlePDAScan: (code: string) => void) {
         const code = intent.getStringExtra(import.meta.env.VITE_APP_NATIVE_SCANNER_DATA);
         const codeType = intent.getStringExtra(import.meta.env.VITE_APP_NATIVE_CODE_TYPE);
         console.log(code, codeType);
-
         handlePDAScan(code || '');
     }
 

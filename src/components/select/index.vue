@@ -2,10 +2,10 @@
     <view>
         <view class="content component-height">
             <view class="content__left" @click="open">
-                <view v-if="!selectValue">
+                <view v-if="!selectValue || selectList.length === 0">
                     <view class="content__placeholder">{{ placeholder }}</view>
                 </view>
-                <view v-if="selectValue">
+                <view v-if="selectValue && selectList.length > 0">
                     <view>{{ selectLabel }}</view>
                 </view>
             </view>
@@ -18,6 +18,7 @@
             :columns="selectList"
             key-name="label"
             :loading="loading"
+            :item-height="itemHeight"
             @cancel="cancel"
             @confirm="confirm"
         ></u-picker>
@@ -60,6 +61,7 @@ const {
     handleSelectList,
     pickerRef,
     handleSelectIndex,
+    itemHeight,
 } = useIndex(props, emit);
 
 defineExpose({

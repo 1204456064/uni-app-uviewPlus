@@ -21,13 +21,17 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
 
     const defaultIndex = ref<number[]>([]);
 
+    const itemHeight = ref<number>(70);
+
     const pickerRef = ref();
 
     async function open() {
         show.value = true;
         loading.value = true;
         await handleSelectList();
-        pickerRef.value.setIndexs(defaultIndex.value);
+        if (selectList.value.length > 0) {
+            pickerRef.value.setIndexs(defaultIndex.value);
+        }
         loading.value = false;
     }
 
@@ -89,6 +93,13 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
 
     function handleSelectIndex(value: string | number | boolean | object) {
         defaultIndex.value = [];
+
+        if (selectList.value[0].length === 0) {
+            selectLabel.value = '';
+            selectValue.value = '';
+            return;
+        }
+
         selectList.value[0].forEach((item: { [key: string]: string | number }, index: number) => {
             if (item.value === value) {
                 selectLabel.value = item.label;
@@ -159,5 +170,6 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         defaultIndex,
         pickerRef,
         handleSelectIndex,
+        itemHeight,
     };
 }

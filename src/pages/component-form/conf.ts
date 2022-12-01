@@ -15,6 +15,15 @@ export default function conf() {
             scanInputApi: common.selectByCode,
         },
         {
+            prop: 'cylinderCode2',
+            label: '条码号2',
+            type: 'ScanInput',
+            attribute: { placeholder: '请输入输入框1', border: 'none' },
+            rules: [{ required: true, message: '请输入输入框1' }],
+            scanInputApi: common.selectByCode,
+            defaultScan: true,
+        },
+        {
             prop: 'cylinderNum',
             label: '容器编码',
             type: 'BaseInput',

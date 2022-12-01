@@ -46,7 +46,7 @@ const { formRef, form, rules, imageList } = useLogin();
 const login = async () => {
     await formRef.value.validate();
 
-    const res: unknownType = await Login.login(form.value);
+    const res: unknownType = await Login.login({ ...form.value, organizationId: '26b151029f7c3188a3bf920ae3eaaf22' });
     if (!res) {
         return;
     }
