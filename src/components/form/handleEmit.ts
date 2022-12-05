@@ -18,6 +18,6 @@ export function handleBaseInpput(form: formCheck, item: { value: string | number
 export function handleBaseSelect(form: formCheck, item: { value: apiSelectType; formItem: FormItem }) {
     form[item.formItem.prop] = item.value.value;
     if (item.formItem.labelField) {
-        item.formItem.labelField = item.value.label;
+        form[item.formItem.labelField] = item.value.label;
     }
 }

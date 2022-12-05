@@ -3,7 +3,7 @@ import { nextTick, onBeforeMount, ref } from 'vue';
 import { FormItem } from '../schema';
 import { handleBaseInpput, handleBaseSelect } from './handleEmit';
 import { apiSelectType, unknownType } from '@/utils/types';
-export default function useIndex(props: { schemaList: FormItem[] }) {
+export default function useIndex(props: { schemaList: FormItem[] }, emit: Function) {
     // 渲染的组件列表
     const renderComponentList = ref<FormItem[]>(props.schemaList);
 
@@ -70,9 +70,13 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     /**
      * 下拉回调
      * @param item value是选中的值，formItem为回调的表单项
+     * emit('handleSelectClear',params) 为清除选择项时的回调，params是整个表单项的值
      */
-    function handleSelect(item: { value: apiSelectType; formItem: FormItem }) {
+    function handleSelect(item: { value: apiSelectType; formItem: FormItem; isClear?: boolean }) {
         handleBaseSelect(form.value, item);
+        if (item.isClear) {
+            emit('handleSelectClear', form.value);
+        }
     }
 
     /**
@@ -80,8 +84,6 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
      * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
      */
     async function handleScanInputSuccess(item: { value: object; formItem: FormItem; reset?: true }) {
-        console.log(JSON.parse(JSON.stringify(form.value)));
-
         form.value = {
             ...form.value,
             ...item.value,
@@ -180,7 +182,6 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     }
 
     onBeforeMount(() => {
-        // renderComponentList.value = props.schemaList;
         initForm();
     });
     return {

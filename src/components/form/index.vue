@@ -25,7 +25,7 @@
 </template>
 <script setup lang="ts">
 import useForm from './useForm';
-import { FormItem } from '../schema';
+import { formCheck, FormItem } from '../schema';
 import { components } from '@/components/index';
 import { ref } from 'vue';
 
@@ -39,6 +39,11 @@ const props = withDefaults(
         labelWidth: 200,
     }
 );
+
+const emit = defineEmits<{
+    (e: 'handleSelectClear', val: formCheck): void;
+}>();
+
 async function validForm() {
     const valid = ref<boolean>(false);
     await formRef.value
@@ -51,6 +56,7 @@ async function validForm() {
         });
     return valid.value;
 }
+
 const {
     renderComponentList,
     form,
@@ -61,7 +67,7 @@ const {
     handleScanInputSuccess,
     setComponentRef,
     handleScanInputFail,
-} = useForm(props);
+} = useForm(props, emit);
 
 defineExpose({
     updateValue(item: { value: string | number; formItem: FormItem }) {},

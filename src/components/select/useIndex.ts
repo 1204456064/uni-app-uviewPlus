@@ -9,22 +9,33 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     // 输入框展示的值
     const selectLabel = ref<string | number>('');
 
+    // 是否弹出选择器
     const show = ref<boolean>(false);
 
+    // 选择器的列表
     const selectList = ref<{ [key: string]: string | number }[][]>([]);
 
+    // 没有值时候的提示
     const placeholder = ref<string | number | boolean>('请选择');
 
+    // loading
     const loading = ref<boolean>(false);
 
+    // 是否展示清除按钮
     const showClear = ref<string | boolean | number>(true);
 
+    // 选中项的下标
     const defaultIndex = ref<number[]>([]);
 
+    // 选择项的高
     const itemHeight = ref<number>(70);
 
+    // 选择器的实例
     const pickerRef = ref();
 
+    /**
+     * 打开选择器
+     */
     async function open() {
         show.value = true;
         loading.value = true;
@@ -35,6 +46,9 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         loading.value = false;
     }
 
+    /**
+     * 关闭选择器
+     */
     function cancel() {
         show.value = false;
     }
@@ -97,16 +111,17 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         }
     }
 
+    /**
+     * 给当前项赋值并且记录当前选中的下标
+     * @param value 下拉的value值
+     */
     function handleSelectIndex(value: string | number | boolean | object) {
         defaultIndex.value = [];
 
         if (selectList.value[0].length === 0) {
             selectLabel.value = '';
             selectValue.value = '';
-            // emit('handleSelect', {
-            //     value: { label: selectLabel.value, value: selectValue.value },
-            //     formItem: props.formItem,
-            // });
+
             return;
         }
 
@@ -117,10 +132,6 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             }
         });
         selectValue.value = value;
-        // emit('handleSelect', {
-        //     value: { label: selectLabel.value, value: selectValue.value },
-        //     formItem: props.formItem,
-        // });
     }
 
     /**
