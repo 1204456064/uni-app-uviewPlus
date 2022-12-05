@@ -46,6 +46,9 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         });
     }
 
+    /**
+     * 重新设置校验字段
+     */
     function resetRules() {
         rules.value = {};
         props.schemaList.forEach((item: FormItem) => {

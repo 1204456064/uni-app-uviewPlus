@@ -2,10 +2,10 @@ import { SCAN_MODE } from '@/constant';
 import { showToast } from '@/utils/messageTip';
 import { requestObj } from '@/utils/types';
 import { nextTick, onBeforeMount, ref } from 'vue';
-import { FormItem } from '../schema';
+import { defaultValueCheck, FormItem } from '../schema';
 export default function useIndex(props: { formItem: FormItem }, emit: Function) {
     // 输入框的值
-    const inputValue = ref<string | number>('');
+    const inputValue = ref<defaultValueCheck>('');
 
     // 输入框聚焦属性
     const focus = ref<boolean>(false);
@@ -72,13 +72,13 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      * 扫码或者确认后方法
      * @param code 输入框的值
      */
-    async function searchCylinderCode(code: string | number) {
+    async function searchCylinderCode(code: defaultValueCheck) {
         if (code === '') {
             showToast('当前输入框的值为空');
             return;
         }
 
-        let parmas: { [key: string]: string | number } = {};
+        let parmas: { [key: string]: defaultValueCheck } = {};
         if (props.formItem.scanInputParmas) {
             parmas = {
                 ...props.formItem.scanInputParmas,
@@ -197,6 +197,8 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         // 判断有无默认值
         if (!props.formItem.defaultValue) {
             inputValue.value = '';
+        } else {
+            inputValue.value = props.formItem.defaultValue;
         }
 
         // 判断有无默认值

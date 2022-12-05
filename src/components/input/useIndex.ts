@@ -2,7 +2,7 @@ import { onBeforeMount, ref } from 'vue';
 import { FormItem } from '../schema';
 export default function useIndex(props: { formItem: FormItem }, emit: Function) {
     // 输入框的值
-    const inputValue = ref<string | number>();
+    const inputValue = ref<object | string | number | boolean>();
 
     // 如果是后置插槽并且type为text，此时textContent的值为后置插槽的值
     const textContent = ref<string | undefined>('');
@@ -23,7 +23,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         if (!props.formItem.defaultValue) {
             inputValue.value = '';
         }
-
+        inputValue.value = props.formItem.defaultValue;
         // 判断有无插槽
         if (props.formItem.slots) {
             if (props.formItem.slots.renderType === 'text') {
