@@ -17,7 +17,10 @@ const formRef = ref();
 async function submit() {
     const res = await formRef.value.validForm();
     if (!res) {
+        console.log('未通过校验的宝');
+
         return;
     }
+    console.log('通过校验了宝');
 }
 </script>

@@ -1,5 +1,5 @@
 import { formCheck, rulesCheck } from './../schema';
-import { computed, nextTick, onBeforeMount, ref } from 'vue';
+import { nextTick, onBeforeMount, ref } from 'vue';
 import { FormItem } from '../schema';
 import { handleBaseInpput, handleBaseSelect } from './handleEmit';
 import { apiSelectType, unknownType } from '@/utils/types';
@@ -46,6 +46,15 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         });
     }
 
+    function resetRules() {
+        props.schemaList.forEach((item: FormItem) => {
+            if (item.rules && item.show !== false) {
+                rules.value[`${item.prop}`] = item.rules;
+            }
+        });
+        console.log(rules.value);
+    }
+
     /**
      * 处理子组件的回调
      */
@@ -85,6 +94,9 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
                 formItem: item.formItem,
                 result: 'success',
             });
+            nextTick(() => {
+                resetRules();
+            });
         }
 
         setComponentData();
@@ -103,6 +115,9 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
                 schema: props.schemaList,
                 formItem: item.formItem,
                 result: 'error',
+            });
+            nextTick(() => {
+                resetRules();
             });
         }
 

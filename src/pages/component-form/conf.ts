@@ -17,6 +17,13 @@ export default function conf() {
             defaultScan: true,
             componentProps: ({ schema, formItem, result }) => {
                 if (result === 'error') {
+                    schema[1].show = true;
+
+                    return;
+                }
+                schema[1].show = false;
+                if (schema[4].slots?.tagAttribute) {
+                    schema[4].slots.tagAttribute.text = '123';
                 }
             },
         },
@@ -35,7 +42,7 @@ export default function conf() {
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
         },
-
+        // 带文本插槽输入框
         {
             prop: 'valveMaterialLabel',
             label: '输入框1',
@@ -48,6 +55,8 @@ export default function conf() {
                 content: 'Mpa',
             },
         },
+        // 带Tag插槽输入框
+
         {
             prop: 'cylinderTypeLabel',
             label: '输入框2',
@@ -55,8 +64,11 @@ export default function conf() {
             attribute: { placeholder: '请输入输入框2', border: 'none' },
             slots: {
                 slotType: 'suffix',
-                renderType: 'text',
-                content: 'kg',
+                renderType: 'tag',
+                tagAttribute: {
+                    text: '',
+                    type: 'success',
+                },
             },
         },
         {
@@ -84,7 +96,6 @@ export default function conf() {
             attribute: { placeholder: '请选择api下拉' },
             rules: [{ required: true, message: '请选择api下拉' }],
             selectApi: dictionary.getInspectUnitList,
-            defaultValue: '37a6113e8469d0474b9d4d90286d3e83',
         },
     ];
 

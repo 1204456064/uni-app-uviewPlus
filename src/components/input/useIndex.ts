@@ -5,7 +5,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     const inputValue = ref<string | number>();
 
     // 如果是后置插槽并且type为text，此时textContent的值为后置插槽的值
-    const textContent = ref('');
+    const textContent = ref<string | undefined>('');
 
     // 是否渲染后置插槽
     const renderSuffix = ref<boolean>(false);
@@ -26,11 +26,11 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
 
         // 判断有无插槽
         if (props.formItem.slots) {
-            if (props.formItem.slots.slotType === 'suffix') {
-                renderSuffix.value = true;
+            if (props.formItem.slots.renderType === 'text') {
+                textContent.value = props.formItem.slots.content;
             }
 
-            if (props.formItem.slots.renderType === 'text') {
+            if (props.formItem.slots.renderType === 'tag') {
                 textContent.value = props.formItem.slots.content;
             }
             return;

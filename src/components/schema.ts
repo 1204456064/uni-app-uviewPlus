@@ -82,8 +82,9 @@ export interface rulesItemCheck {
 // 输入框插槽
 export interface slotsCheck {
     slotType: 'suffix' | 'prefix';
-    renderType: 'text';
-    content: string;
+    renderType: 'text' | 'tag';
+    tagAttribute?: { [key: string]: string | boolean | number };
+    content?: string;
     buttonFunction?: () => void;
 }
 

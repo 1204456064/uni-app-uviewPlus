@@ -1,8 +1,9 @@
 <template>
     <view>
         <u-input v-model="inputValue" v-bind="formItem.attribute" @change="changeInputValue">
-            <template v-if="renderSuffix" #suffix>
-                <text>{{ textContent }}</text>
+            <template #suffix>
+                <text v-if="formItem.slots?.renderType === 'text'">{{ textContent }}</text>
+                <u-tag v-if="formItem.slots?.renderType === 'tag'" v-bind="formItem.slots?.tagAttribute"></u-tag>
             </template>
         </u-input>
     </view>
@@ -29,7 +30,7 @@ const emit = defineEmits<{
     (e: 'handleEmit', val: string | number): void;
 }>();
 
-const { inputValue, changeInputValue, textContent, renderSuffix } = useIndex(props, emit);
+const { inputValue, changeInputValue, textContent } = useIndex(props, emit);
 defineExpose({
     getProp() {
         return props.formItem.prop;
