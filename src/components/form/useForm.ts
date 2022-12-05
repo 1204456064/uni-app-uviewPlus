@@ -47,12 +47,12 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     }
 
     function resetRules() {
+        rules.value = {};
         props.schemaList.forEach((item: FormItem) => {
             if (item.rules && item.show !== false) {
                 rules.value[`${item.prop}`] = item.rules;
             }
         });
-        console.log(rules.value);
     }
 
     /**
@@ -77,6 +77,8 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
      * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
      */
     async function handleScanInputSuccess(item: { value: object; formItem: FormItem; reset?: true }) {
+        console.log(JSON.parse(JSON.stringify(form.value)));
+
         form.value = {
             ...form.value,
             ...item.value,
@@ -101,6 +103,7 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
 
         setComponentData();
         componentRef = [];
+        console.log(form.value);
     }
 
     /**

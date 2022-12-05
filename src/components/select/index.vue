@@ -69,6 +69,8 @@ defineExpose({
         return props.formItem.prop;
     },
     async setValue(val: string | number) {
+        console.log(val);
+
         if (val === '') {
             selectValue.value = val;
             selectLabel.value = val;

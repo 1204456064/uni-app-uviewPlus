@@ -103,6 +103,10 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         if (selectList.value[0].length === 0) {
             selectLabel.value = '';
             selectValue.value = '';
+            // emit('handleSelect', {
+            //     value: { label: selectLabel.value, value: selectValue.value },
+            //     formItem: props.formItem,
+            // });
             return;
         }
 
@@ -113,6 +117,10 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             }
         });
         selectValue.value = value;
+        // emit('handleSelect', {
+        //     value: { label: selectLabel.value, value: selectValue.value },
+        //     formItem: props.formItem,
+        // });
     }
 
     /**

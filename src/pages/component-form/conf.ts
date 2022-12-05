@@ -6,6 +6,7 @@ export default function conf() {
     const labelWidth = 200;
 
     const schemaList: FormItem[] = [
+        //表单联动
         {
             prop: 'cylinderCode',
             label: '条码号',
@@ -72,7 +73,7 @@ export default function conf() {
             },
         },
         {
-            prop: 'addTime',
+            prop: 'cylinderWeight',
             label: '自定义下拉',
             type: 'BaseSelect',
             attribute: { placeholder: '请选择容积' },
