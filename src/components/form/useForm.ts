@@ -1,12 +1,13 @@
 import { formCheck, rulesCheck } from './../schema';
-import { nextTick, onBeforeMount, ref } from 'vue';
+import { computed, nextTick, onBeforeMount, ref } from 'vue';
 import { FormItem } from '../schema';
 import { handleBaseInpput, handleBaseSelect } from './handleEmit';
 import { apiSelectType, unknownType } from '@/utils/types';
 export default function useIndex(props: { schemaList: FormItem[] }) {
     // 渲染的组件列表
-    const renderComponentList = ref<FormItem[]>([]);
+    const renderComponentList = ref<FormItem[]>(props.schemaList);
 
+    const showComponent = ref<boolean>(true);
     // 表单ref
     const formRef = ref();
 
@@ -50,7 +51,7 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
      * 处理子组件的回调
      */
     function handleEmit(item: { value: string | number; formItem: FormItem }) {
-        if (item.formItem.type === 'BaseInput') {
+        if (item.formItem.type === 'BaseInput' || item.formItem.type === 'ScanInput') {
             handleBaseInpput(form.value, item);
         }
     }
@@ -67,16 +68,35 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
      * BaseInput组件扫码成功回调
      * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
      */
-    function handleScanInputSuccess(item: { value: object; formItem: FormItem; reset?: true }) {
+    async function handleScanInputSuccess(item: { value: object; formItem: FormItem; reset?: true }) {
         form.value = {
             ...form.value,
             ...item.value,
         };
+
         if (item.reset) {
             form.value[item.formItem.prop] = '';
         }
+
+        if (item.formItem.componentProps) {
+            await item.formItem.componentProps({
+                value: form.value[item.formItem.prop],
+                formModel: form.value,
+                schema: props.schemaList,
+                formItem: item.formItem,
+                result: 'success',
+            });
+        }
         setComponentData();
+
         componentRef = [];
+    }
+
+    async function updateComponentStatus() {
+        showComponent.value = false;
+        nextTick(() => {
+            showComponent.value = true;
+        });
     }
 
     /**
@@ -138,7 +158,7 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     }
 
     onBeforeMount(() => {
-        renderComponentList.value = props.schemaList;
+        // renderComponentList.value = props.schemaList;
         initForm();
     });
     return {
@@ -152,5 +172,6 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         handleScanInputSuccess,
         setComponentRef,
         handleScanInputFail,
+        showComponent,
     };
 }

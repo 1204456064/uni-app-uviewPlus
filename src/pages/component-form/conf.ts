@@ -13,8 +13,22 @@ export default function conf() {
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
             scanInputApi: common.selectByCode,
-            codeScanningMode: 'continuousScanningCode',
+            codeScanningMode: 'continuousScanningCodeAndClear',
             defaultScan: true,
+            componentProps: ({ schema, formItem, result }) => {
+                if (!result) {
+                    return;
+                }
+                console.log(schema);
+                formItem.label = 'kkdsa';
+                schema.forEach((item: FormItem) => {
+                    if (item.prop === 'addTime') {
+                        item.options = [];
+                        item.show = false;
+                    }
+                });
+                schema[1].show = false;
+            },
         },
         {
             prop: 'cylinderCode2',

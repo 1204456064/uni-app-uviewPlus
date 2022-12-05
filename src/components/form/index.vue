@@ -2,7 +2,12 @@
     <view class="view-wrap">
         <u-form ref="formRef" :model="form" :rules="rules" :label-width="labelWidth">
             <view v-for="item in renderComponentList" :key="item.prop">
-                <u-form-item :label="item.label" :prop="item.prop" :required="item.rules ? true : false">
+                <u-form-item
+                    v-if="item.show !== false"
+                    :label="item.label"
+                    :prop="item.prop"
+                    :required="item.rules ? true : false"
+                >
                     <component
                         :is="components[item.type]"
                         :ref="setComponentRef"
@@ -56,6 +61,7 @@ const {
     handleScanInputSuccess,
     setComponentRef,
     handleScanInputFail,
+    showComponent,
 } = useForm(props);
 
 defineExpose({

@@ -51,6 +51,14 @@ export interface FormItem {
         [key: string]: string | number;
     };
     defaultScan?: boolean;
+    componentProps?: (opt: {
+        value: string | number | boolean | object;
+        formModel: formCheck;
+        schema: FormItem[];
+        formItem: FormItem;
+        result: 'success' | 'error';
+    }) => Promise<void> | void;
+    show?: boolean;
 }
 
 //默认值类型

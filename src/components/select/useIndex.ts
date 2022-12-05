@@ -44,6 +44,12 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      * @param e 点击确认后的回调，参数为indexs下标、value选中的项、values数据源
      */
     function confirm(e: { indexs: number[]; value: apiSelectType[]; values: apiSelectType[] }) {
+        if (selectList.value[0].length === 0) {
+            cancel();
+
+            return;
+        }
+
         if (!e.value[0]) {
             fixSelectBug();
             return;
