@@ -61,7 +61,6 @@ const {
     handleScanInputSuccess,
     setComponentRef,
     handleScanInputFail,
-    showComponent,
 } = useForm(props);
 
 defineExpose({

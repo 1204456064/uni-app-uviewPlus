@@ -16,18 +16,8 @@ export default function conf() {
             codeScanningMode: 'continuousScanningCodeAndClear',
             defaultScan: true,
             componentProps: ({ schema, formItem, result }) => {
-                if (!result) {
-                    return;
+                if (result === 'error') {
                 }
-                console.log(schema);
-                formItem.label = 'kkdsa';
-                schema.forEach((item: FormItem) => {
-                    if (item.prop === 'addTime') {
-                        item.options = [];
-                        item.show = false;
-                    }
-                });
-                schema[1].show = false;
             },
         },
         {

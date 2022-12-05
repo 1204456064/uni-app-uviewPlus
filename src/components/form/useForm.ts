@@ -7,7 +7,6 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     // 渲染的组件列表
     const renderComponentList = ref<FormItem[]>(props.schemaList);
 
-    const showComponent = ref<boolean>(true);
     // 表单ref
     const formRef = ref();
 
@@ -87,29 +86,31 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
                 result: 'success',
             });
         }
+
         setComponentData();
-
         componentRef = [];
-    }
-
-    async function updateComponentStatus() {
-        showComponent.value = false;
-        nextTick(() => {
-            showComponent.value = true;
-        });
     }
 
     /**
      * BaseInput组件扫码失败回调
      * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
      */
-    function handleScanInputFail(item: { reset: boolean; formItem: FormItem; params?: formCheck }) {
+    async function handleScanInputFail(item: { reset: boolean; formItem: FormItem; params?: formCheck }) {
+        if (item.formItem.componentProps) {
+            await item.formItem.componentProps({
+                value: form.value[item.formItem.prop],
+                formModel: form.value,
+                schema: props.schemaList,
+                formItem: item.formItem,
+                result: 'error',
+            });
+        }
+
         if (!item.reset) {
             return;
         }
 
         if (item.params) {
-            console.log(item.params);
             nextTick(() => {
                 resetForm(item.params);
             });
@@ -172,6 +173,5 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         handleScanInputSuccess,
         setComponentRef,
         handleScanInputFail,
-        showComponent,
     };
 }
