@@ -19,6 +19,10 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
     // const componentRef = ref({});
     let componentRef: unknownType = [];
 
+    /**
+     * 收集组件的实例
+     * @param el 实例对象
+     */
     function setComponentRef(el: unknownType) {
         if (el) {
             componentRef.push(el);
@@ -51,34 +55,64 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         }
     }
 
+    /**
+     * 下拉回调
+     * @param item value是选中的值，formItem为回调的表单项
+     */
     function handleSelect(item: { value: apiSelectType; formItem: FormItem }) {
         handleBaseSelect(form.value, item);
     }
 
-    function handleScanInputSuccess(item: { value: object; formItem: FormItem }) {
+    /**
+     * BaseInput组件扫码成功回调
+     * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
+     */
+    function handleScanInputSuccess(item: { value: object; formItem: FormItem; reset?: true }) {
         form.value = {
             ...form.value,
             ...item.value,
         };
+        if (item.reset) {
+            form.value[item.formItem.prop] = '';
+        }
         setComponentData();
         componentRef = [];
     }
 
-    function handleScanInputFail(item: { reset: boolean; formItem: FormItem }) {
+    /**
+     * BaseInput组件扫码失败回调
+     * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
+     */
+    function handleScanInputFail(item: { reset: boolean; formItem: FormItem; params?: formCheck }) {
         if (!item.reset) {
             return;
         }
-        // initForm();
-        // form.value = {
-        //     ...form.value,
-        //     cylinderCode: '',
-        // };
+
+        if (item.params) {
+            console.log(item.params);
+            nextTick(() => {
+                resetForm(item.params);
+            });
+            return;
+        }
+
         nextTick(() => {
             resetForm();
         });
     }
-    function resetForm() {
+
+    /**
+     * 重置表单
+     */
+    function resetForm(params?: formCheck) {
         let resetForm: formCheck = {};
+        if (params) {
+            form.value = {
+                ...form.value,
+                ...params,
+            };
+            return;
+        }
         props.schemaList.forEach((item: FormItem) => {
             if (item.defaultValue) {
                 resetForm[`${item.prop}`] = item.defaultValue;
@@ -92,15 +126,12 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
         }
     }
 
+    /**
+     * 设置表单值
+     */
     function setComponentData() {
-        let sign = 0;
-        sign = props.schemaList.length;
-
-        for (let i = 0; i < sign; i++) {
+        for (let i = 0; i < props.schemaList.length; i++) {
             if (componentRef[i].getProp() && form.value[componentRef[i].getProp()]) {
-                console.log(form.value[componentRef[i].getProp()]);
-                console.log(componentRef[i].getProp());
-
                 componentRef[i].setValue(form.value[componentRef[i].getProp()]);
             }
         }
@@ -108,7 +139,6 @@ export default function useIndex(props: { schemaList: FormItem[] }) {
 
     onBeforeMount(() => {
         renderComponentList.value = props.schemaList;
-
         initForm();
     });
     return {

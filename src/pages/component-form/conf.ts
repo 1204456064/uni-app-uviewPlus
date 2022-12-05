@@ -13,7 +13,7 @@ export default function conf() {
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
             scanInputApi: common.selectByCode,
-            codeScanningMode: 'commonScanningCodeAndClear',
+            codeScanningMode: 'continuousScanningCode',
             defaultScan: true,
         },
         {
@@ -31,6 +31,7 @@ export default function conf() {
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
         },
+
         {
             prop: 'valveMaterialLabel',
             label: '输入框1',

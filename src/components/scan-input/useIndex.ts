@@ -96,7 +96,23 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             handleScanError();
             return;
         }
-        emit('handleScanInputSuccess', { value: res.data, formItem: props.formItem });
+        handleScanSuccess(res);
+    }
+
+    /**
+     * 查询成功处理
+     * 根据不同的扫码模式进行不同的处理
+     */
+    function handleScanSuccess(request: requestObj) {
+        if (scanMode.value === SCAN_MODE.MODE_ONE || scanMode.value === SCAN_MODE.MODE_TWO) {
+            emit('handleScanInputSuccess', { value: request.data, formItem: props.formItem });
+            return;
+        }
+        inputValue.value = '';
+
+        emit('handleScanInputSuccess', { value: request.data, formItem: props.formItem, reset: true });
+        scanItem.value = true;
+        resetFocus();
     }
 
     /**
@@ -107,12 +123,28 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         if (scanMode.value === SCAN_MODE.MODE_ONE) {
             return;
         }
+
         if (scanMode.value === SCAN_MODE.MODE_TWO) {
-            scanItem.value = true;
             emit('handleScanInputFail', { reset: true, formItem: props.formItem });
-            resetFocus();
-            return;
         }
+
+        if (scanMode.value === SCAN_MODE.MODE_THREE) {
+            emit('handleScanInputFail', {
+                reset: false,
+                formItem: props.formItem,
+            });
+        }
+
+        if (scanMode.value === SCAN_MODE.MODE_FOUR) {
+            inputValue.value = '';
+            emit('handleScanInputFail', {
+                reset: true,
+                formItem: props.formItem,
+                params: { [`${props.formItem.prop}`]: '' },
+            });
+        }
+        scanItem.value = true;
+        resetFocus();
     }
 
     /**
@@ -173,6 +205,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             focus.value = true;
         }
 
+        // 记录扫码模式
         if (props.formItem.codeScanningMode) {
             scanMode.value = props.formItem.codeScanningMode;
         }
