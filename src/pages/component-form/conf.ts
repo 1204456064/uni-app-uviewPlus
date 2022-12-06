@@ -98,6 +98,13 @@ export default function conf() {
             rules: [{ required: true, message: '请选择api下拉' }],
             selectApi: dictionary.getInspectUnitList,
         },
+        {
+            prop: 'addTime',
+            label: '日期选择器',
+            type: 'DateTimePicker',
+            attribute: { placeholder: '请选择日期' },
+            rules: [{ required: true, message: '请选择api下拉' }],
+        },
     ];
 
     return {
