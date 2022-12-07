@@ -59,10 +59,11 @@ export interface FormItem {
         result: 'success' | 'error';
     }) => Promise<void> | void;
     show?: boolean;
+    mode?: 'date' | 'datetime';
 }
 
 //默认值类型
-export type defaultValueCheck = object | string | number | boolean;
+export type defaultValueCheck = object | string | number | boolean | Date;
 
 // 表单值类型
 export interface formCheck {

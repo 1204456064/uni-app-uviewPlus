@@ -17,6 +17,7 @@
                         @handle-select="handleSelect"
                         @handle-scan-input-success="handleScanInputSuccess"
                         @handle-scan-input-fail="handleScanInputFail"
+                        @handle-date-picker="handleDatePicker"
                     ></component>
                 </u-form-item>
             </view>
@@ -67,6 +68,7 @@ const {
     handleScanInputSuccess,
     setComponentRef,
     handleScanInputFail,
+    handleDatePicker,
 } = useForm(props, emit);
 
 defineExpose({

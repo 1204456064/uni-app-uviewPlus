@@ -102,6 +102,7 @@ export default function conf() {
             prop: 'addTime',
             label: '日期选择器',
             type: 'DateTimePicker',
+            mode: 'date',
             attribute: { placeholder: '请选择日期' },
             rules: [{ required: true, message: '请选择api下拉' }],
         },

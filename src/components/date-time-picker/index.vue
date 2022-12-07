@@ -11,18 +11,29 @@
             </view>
             <view v-if="showClear"> <u-icon name="close-circle-fill" size="40" @click="clearValue"></u-icon> </view>
         </view>
-        <u-datetime-picker
+        <!-- <u-datetime-picker
             v-model="dateValue"
             :show="show"
-            mode="date"
+            :mode="mode"
+            :default-value="dateValue"
             @confirm="confirm"
             @cancel="cancel"
-        ></u-datetime-picker>
+        ></u-datetime-picker> -->
+        <mx-date-picker
+            :show="show"
+            :type="mode"
+            :value="dateValue"
+            :show-tips="true"
+            @confirm="confirm"
+            @cancel="cancel"
+        />
     </view>
 </template>
 <script setup lang="ts">
 import useIndex from './useIndex';
 import { FormItem } from '../schema';
+import MxDatePicker from '@/components/date-time-picker/mx-datepicker.vue';
+
 const props = withDefaults(
     defineProps<{
         formItem: FormItem;
@@ -39,10 +50,10 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-    (e: 'handleDatePicker', val: string | number): void;
+    (e: 'handleDatePicker', val: { value: string; formItem: FormItem }): void;
 }>();
 
-const { show, dateValue, showClear, placeholder, open, clearValue, cancel, confirm } = useIndex(props, emit);
+const { show, dateValue, showClear, placeholder, open, clearValue, cancel, confirm, mode } = useIndex(props, emit);
 
 defineExpose({
     getProp() {

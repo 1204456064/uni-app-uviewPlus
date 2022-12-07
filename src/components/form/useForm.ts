@@ -146,6 +146,14 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
     }
 
     /**
+     *
+     * @param item value是日期选择器选中后的值，formItem为回调的表单项
+     */
+    function handleDatePicker(item: { value: string; formItem: FormItem }) {
+        form.value[item.formItem.prop] = item.value;
+    }
+
+    /**
      * 重置表单
      */
     function resetForm(params?: formCheck) {
@@ -195,5 +203,6 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
         handleScanInputSuccess,
         setComponentRef,
         handleScanInputFail,
+        handleDatePicker,
     };
 }

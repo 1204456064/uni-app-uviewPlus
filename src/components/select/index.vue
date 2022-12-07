@@ -43,7 +43,7 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-    (e: 'handleSelect', val: string | number): void;
+    (e: 'handleSelect', val: { value: { label: string | number; value: string | number }; formItem: FormItem }): void;
 }>();
 
 const {
