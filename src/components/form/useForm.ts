@@ -62,7 +62,11 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
      * 处理子组件的回调
      */
     function handleEmit(item: { value: string | number; formItem: FormItem }) {
-        if (item.formItem.type === 'BaseInput' || item.formItem.type === 'ScanInput') {
+        if (
+            item.formItem.type === 'BaseInput' ||
+            item.formItem.type === 'ScanInput' ||
+            item.formItem.type === 'BaseUpload'
+        ) {
             handleBaseInpput(form.value, item);
         }
     }

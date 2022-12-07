@@ -77,7 +77,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             return;
         }
 
-        dateValue.value = dayjs(new Date()).format('YYYY-MM-DD HH:mm');
+        dateValue.value = dayjs(date).format('YYYY-MM-DD HH:mm');
         mode.value = props.formItem.mode;
     });
 

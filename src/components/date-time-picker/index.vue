@@ -59,7 +59,12 @@ defineExpose({
     getProp() {
         return props.formItem.prop;
     },
-    async setValue(val: string | number) {},
+    async setValue(val: string | number) {
+        if (val === '' || val === null) {
+            return;
+        }
+        dateValue.value = val;
+    },
 });
 </script>
 <style lang="scss" scoped>

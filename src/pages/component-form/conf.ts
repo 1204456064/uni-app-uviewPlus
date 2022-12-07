@@ -99,12 +99,22 @@ export default function conf() {
             selectApi: dictionary.getInspectUnitList,
         },
         {
-            prop: 'addTime',
+            prop: 'lastInspectDate',
             label: '日期选择器',
             type: 'DateTimePicker',
-            mode: 'date',
+            mode: 'datetime',
             attribute: { placeholder: '请选择日期' },
             rules: [{ required: true, message: '请选择api下拉' }],
+            defaultValue: '2021-11-01 12:33',
+        },
+        {
+            prop: 'upload',
+            label: '上传选择器',
+            type: 'BaseUpload',
+            attribute: { multiple: true },
+            rules: [{ required: true, message: '请选择图片' }],
+            defaultValue:
+                'http://192.168.3.38:9000/xinlianxin/1670397911939_720x720.png,http://192.168.3.38:9000/xinlianxin/1670397911939_720x720.png',
         },
     ];
 
