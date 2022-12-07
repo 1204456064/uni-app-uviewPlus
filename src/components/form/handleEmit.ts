@@ -11,7 +11,7 @@ export function handleBaseInpput(form: formCheck, item: { value: string | number
 }
 
 /**
- * 表单项input改变后的回调处理
+ * 表单项下拉改变后的回调处理
  * @param form 表单的值
  * @param item 当前表单项和下拉的值
  */

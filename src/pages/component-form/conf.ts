@@ -89,6 +89,17 @@ export default function conf() {
             ],
             rules: [{ required: true, message: '请选择写死下拉' }],
             labelField: 'cylinderCode2Label',
+            componentProps: ({ value, schema, formItem, result }) => {
+                if (result === 'success') {
+                    console.log(value);
+                    if (value === '') {
+                        console.log('我调用的回调');
+                    }
+                    schema[1].show = true;
+
+                    return;
+                }
+            },
         },
         {
             prop: 'cylinderVolume',

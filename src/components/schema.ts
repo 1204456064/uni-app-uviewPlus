@@ -56,7 +56,7 @@ export interface FormItem {
         formModel: formCheck;
         schema: FormItem[];
         formItem: FormItem;
-        result: 'success' | 'error';
+        result: 'success' | 'error' | 'selectClear';
     }) => Promise<void> | void;
     show?: boolean;
     mode?: 'date' | 'datetime';

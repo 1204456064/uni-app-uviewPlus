@@ -72,10 +72,39 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
      * @param item value是选中的值，formItem为回调的表单项
      * emit('handleSelectClear',params) 为清除选择项时的回调，params是整个表单项的值
      */
-    function handleSelect(item: { value: apiSelectType; formItem: FormItem; isClear?: boolean }) {
+    async function handleSelect(item: { value: apiSelectType; formItem: FormItem; isClear?: boolean }) {
         handleBaseSelect(form.value, item);
         if (item.isClear) {
             emit('handleSelectClear', form.value);
+            if (item.formItem.componentProps) {
+                await item.formItem.componentProps({
+                    value: form.value[item.formItem.prop],
+                    formModel: form.value,
+                    schema: props.schemaList,
+                    formItem: item.formItem,
+                    result: 'selectClear',
+                });
+                nextTick(() => {
+                    resetRules();
+                });
+            }
+        }
+
+        if (form.value[item.formItem.prop] === '') {
+            return;
+        }
+
+        if (item.formItem.componentProps) {
+            await item.formItem.componentProps({
+                value: form.value[item.formItem.prop],
+                formModel: form.value,
+                schema: props.schemaList,
+                formItem: item.formItem,
+                result: 'success',
+            });
+            nextTick(() => {
+                resetRules();
+            });
         }
     }
 
