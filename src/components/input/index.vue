@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view class="component-height">
         <u-input v-model="inputValue" v-bind="formItem.attribute" @change="changeInputValue">
             <template #suffix>
                 <text v-if="formItem.slots?.renderType === 'text'">{{ textContent }}</text>
@@ -40,3 +40,8 @@ defineExpose({
     },
 });
 </script>
+<style lang="scss" scoped>
+:deep(.u-input__content) {
+    height: 70rpx;
+}
+</style>

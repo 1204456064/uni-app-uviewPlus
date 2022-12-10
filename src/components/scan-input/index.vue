@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view class="component-height">
         <u-input
             v-model="inputValue"
             :focus="focus"
@@ -58,3 +58,8 @@ defineExpose({
     },
 });
 </script>
+<style lang="scss" scoped>
+:deep(.u-input__content) {
+    height: 70rpx;
+}
+</style>

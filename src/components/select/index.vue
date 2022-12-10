@@ -84,6 +84,8 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 70rpx;
+
     &__left {
         width: 100%;
     }
