@@ -6,6 +6,17 @@ export default function conf() {
     const labelWidth = 200;
 
     const schemaList: FormItem[] = [
+        {
+            prop: 'radio1',
+            label: '运行状态',
+            type: 'BaseRadio',
+            rules: [{ required: true, message: '请选择' }],
+            radioList: [
+                { label: '正常', value: 1 },
+                { label: '异常', value: 2 },
+            ],
+            defaultValue: 2,
+        },
         //表单联动
         {
             prop: 'cylinderCode',

@@ -1,7 +1,7 @@
 import { formCheck, rulesCheck } from './../schema';
 import { nextTick, onBeforeMount, ref } from 'vue';
 import { FormItem } from '../schema';
-import { handleBaseInpput, handleBaseSelect } from './handleEmit';
+import { handleBaseInput, handleBaseSelect } from './handleEmit';
 import { apiSelectType, unknownType } from '@/utils/types';
 export default function useIndex(props: { schemaList: FormItem[] }, emit: Function) {
     // 渲染的组件列表
@@ -65,9 +65,10 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
         if (
             item.formItem.type === 'BaseInput' ||
             item.formItem.type === 'ScanInput' ||
-            item.formItem.type === 'BaseUpload'
+            item.formItem.type === 'BaseUpload' ||
+            item.formItem.type === 'BaseRadio'
         ) {
-            handleBaseInpput(form.value, item);
+            handleBaseInput(form.value, item);
         }
     }
 

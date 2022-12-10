@@ -6,7 +6,7 @@ import { formCheck, FormItem } from '../schema';
  * @param form 表单的值
  * @param item 当前表单项和输入框的值
  */
-export function handleBaseInpput(form: formCheck, item: { value: string | number; formItem: FormItem }) {
+export function handleBaseInput(form: formCheck, item: { value: string | number; formItem: FormItem }) {
     form[item.formItem.prop] = item.value;
 }
 

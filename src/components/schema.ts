@@ -22,7 +22,7 @@ export interface FormItem {
     // BaseInput 基本输入框
     // BaseSelect 基本选择器(下拉框)
     // ScanInput 带扫码的输入框
-    type: 'BaseInput' | 'BaseSelect' | 'ScanInput' | 'DateTimePicker' | 'BaseUpload';
+    type: 'BaseInput' | 'BaseSelect' | 'ScanInput' | 'DateTimePicker' | 'BaseUpload' | 'BaseRadio';
     labelField?: string | number;
     // commonScanningCode 普通扫码模式 扫码后返回结果、扫码失败后不重置表单
     // commonScanningCodeAndClear 普通扫码模式 扫码后返回结果、失败后会重置表单
@@ -60,6 +60,7 @@ export interface FormItem {
     }) => Promise<void> | void;
     show?: boolean;
     mode?: 'date' | 'datetime';
+    radioList?: baseRadioCheck[];
 }
 
 //默认值类型
@@ -92,4 +93,10 @@ export interface slotsCheck {
 // 下拉解构
 export interface baseSelecCheck {
     data: { [key: string]: string | number }[];
+}
+
+// Radio类型
+export interface baseRadioCheck {
+    label: string;
+    value: string | number;
 }
