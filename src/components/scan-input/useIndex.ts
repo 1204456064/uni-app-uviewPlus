@@ -41,8 +41,6 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      */
     function changeInputValue(e: string | number) {
         if (props.formItem.math) {
-            console.log(Math.floor(Number(e)));
-
             nextTick(() => {
                 inputValue.value = Math[props.formItem.math!](Number(e));
             });
@@ -210,7 +208,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             inputValue.value = props.formItem.defaultValue;
         }
 
-        // 判断有无默认值
+        // 判断有无默认选中扫码框
         if (props.formItem.defaultScan) {
             scanItem.value = true;
             focus.value = true;

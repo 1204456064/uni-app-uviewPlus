@@ -95,9 +95,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         if (!props.formItem.defaultValue) {
             return;
         }
-        if (props.formItem.defaultValue === '') {
-            return;
-        }
+
         let value: unknownType = props.formItem.defaultValue;
         initFileList(value);
     });

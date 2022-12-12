@@ -7,7 +7,7 @@ export default function conf() {
 
     const schemaList: FormItem[] = [
         {
-            prop: 'radio1',
+            prop: 'cylinderStatus',
             label: '运行状态',
             type: 'BaseRadio',
             rules: [{ required: true, message: '请选择' }],

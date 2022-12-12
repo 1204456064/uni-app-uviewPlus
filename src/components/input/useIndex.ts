@@ -16,8 +16,6 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      */
     function changeInputValue(e: string | number) {
         if (props.formItem.math) {
-            console.log(Math.floor(Number(e)));
-
             nextTick(() => {
                 inputValue.value = Math[props.formItem.math!](Number(e));
             });
@@ -42,7 +40,6 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             if (props.formItem.slots.renderType === 'tag') {
                 textContent.value = props.formItem.slots.content;
             }
-            return;
         }
     });
 

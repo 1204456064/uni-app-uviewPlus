@@ -14,11 +14,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     onBeforeMount(() => {
-        if (!props.formItem.radioList) {
-            return;
-        }
-
-        radioList.value = props.formItem.radioList;
+        radioList.value = props.formItem.radioList!;
 
         if (!props.formItem.defaultValue) {
             return;

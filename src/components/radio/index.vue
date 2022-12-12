@@ -48,10 +48,7 @@ defineExpose({
         return props.formItem.prop;
     },
     setValue(val: string | number) {
-        if (!props.formItem.radioList) {
-            return;
-        }
-        props.formItem.radioList.forEach((item) => {
+        props.formItem.radioList!.forEach((item) => {
             if (item.value === val) {
                 radioValue.value = item.label;
             }
