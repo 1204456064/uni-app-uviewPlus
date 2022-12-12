@@ -40,6 +40,15 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      * @param e 输入框改变后的值
      */
     function changeInputValue(e: string | number) {
+        if (props.formItem.math) {
+            console.log(Math.floor(Number(e)));
+
+            nextTick(() => {
+                inputValue.value = Math[props.formItem.math!](Number(e));
+            });
+            emit('handleEmit', { value: Math[props.formItem.math](Number(e)), formItem: props.formItem });
+            return;
+        }
         emit('handleEmit', { value: e, formItem: props.formItem });
     }
 

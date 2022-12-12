@@ -61,6 +61,7 @@ export interface FormItem {
     show?: boolean;
     mode?: 'date' | 'datetime';
     radioList?: baseRadioCheck[];
+    math?: 'floor' | 'random';
 }
 
 //默认值类型

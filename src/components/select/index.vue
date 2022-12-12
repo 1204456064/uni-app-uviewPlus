@@ -92,6 +92,7 @@ defineExpose({
 
     &__placeholder {
         color: #cccfd6;
+        font-size: 16px;
     }
 }
 </style>

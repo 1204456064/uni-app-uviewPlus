@@ -53,6 +53,7 @@ export default function conf() {
             type: 'BaseInput',
             attribute: { placeholder: '请输入输入框1', border: 'none' },
             rules: [{ required: true, message: '请输入输入框1' }],
+            math: 'random',
         },
         // 带文本插槽输入框
         {
