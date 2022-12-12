@@ -125,12 +125,24 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
             return;
         }
 
+        let isFill = false;
+        let label: string | number = '';
+        let selectIndex: number = 0;
         selectList.value[0].forEach((item: { [key: string]: string | number }, index: number) => {
             if (item.value === value) {
-                selectLabel.value = item.label;
-                defaultIndex.value.push(index);
+                isFill = true;
+                label = item.label;
+                selectIndex = index;
             }
         });
+
+        if (!isFill) {
+            selectValue.value = '';
+            selectLabel.value = '';
+            return;
+        }
+        selectLabel.value = label;
+        defaultIndex.value.push(selectIndex);
         selectValue.value = value;
     }
 

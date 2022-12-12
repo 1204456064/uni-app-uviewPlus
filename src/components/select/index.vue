@@ -72,6 +72,13 @@ defineExpose({
         if (val === '') {
             selectValue.value = val;
             selectLabel.value = val;
+            // 需要特殊处理的属性
+            if (props.formItem.attribute) {
+                if (props.formItem.attribute.placeholder) {
+                    placeholder.value = props.formItem.attribute.placeholder;
+                }
+            }
+
             return;
         }
         await handleSelectList();
