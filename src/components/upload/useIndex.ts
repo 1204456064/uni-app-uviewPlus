@@ -80,6 +80,11 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
      * @param value 图片地址
      */
     function initFileList(value: unknownType) {
+        if (value === '') {
+            fileList.value = [];
+            uploadValue.value = '';
+            return;
+        }
         fileList.value = value.split(',').map((item: { url: string }) => {
             return {
                 url: item,

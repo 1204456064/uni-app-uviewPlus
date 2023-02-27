@@ -24,6 +24,11 @@
         </u-form>
     </view>
 </template>
+<script lang="ts">
+export default {
+    name: 'ComponentForm',
+};
+</script>
 <script setup lang="ts">
 import useForm from './useForm';
 import { formCheck, FormItem } from '../schema';

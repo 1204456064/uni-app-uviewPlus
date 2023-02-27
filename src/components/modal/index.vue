@@ -12,7 +12,11 @@
         ></u-modal>
     </view>
 </template>
-
+<script lang="ts">
+export default {
+    name: 'BaseModal',
+};
+</script>
 <script setup lang="ts">
 import useIndex from './uesIndex';
 const emit = defineEmits<{
