@@ -10,7 +10,7 @@
                 >
                     <component
                         :is="components[item.type]"
-                        :ref="setComponentRef"
+                        :ref="(el:unknown) => setComponentRef(el, item.prop)"
                         :form-item="item"
                         class="compon"
                         @handle-emit="handleEmit"
@@ -69,13 +69,25 @@ const {
     setComponentRef,
     handleScanInputFail,
     handleDatePicker,
+    updateComponentData,
+    resetForm,
 } = useForm(props, emit);
 
 defineExpose({
-    updateValue(item: { value: string | number; formItem: FormItem }) {},
-
+    setData(obj: formCheck) {
+        form.value = { ...form.value, ...obj };
+        updateComponentData();
+    },
     async validForm() {
         return await validForm();
+    },
+
+    getData() {
+        return form.value;
+    },
+
+    resetForm() {
+        resetForm();
     },
 });
 </script>

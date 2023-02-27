@@ -44,10 +44,7 @@ const { radioValue, radioList, radioChange } = useIndex(props, emit);
 const style = { marginRight: '40rpx' };
 
 defineExpose({
-    getProp() {
-        return props.formItem.prop;
-    },
-    setValue(val: string | number) {
+    setData(val: string | number) {
         props.formItem.radioList!.forEach((item) => {
             if (item.value === val) {
                 radioValue.value = item.label;

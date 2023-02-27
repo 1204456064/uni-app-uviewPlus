@@ -16,21 +16,21 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
     // 表单的校验项
     const rules = ref<rulesCheck>({});
 
-    // const componentRef = ref({});
-    let componentRef: unknownType = [];
+    // 用于收集组件的实例
+    const instance = ref<unknownType>({});
 
     /**
-     * 收集组件的实例
+     * @description 收集组件的实例,并与prop绑定
      * @param el 实例对象
      */
-    function setComponentRef(el: unknownType) {
+    function setComponentRef(el: unknownType, name: string | number) {
         if (el) {
-            componentRef.push(el);
+            instance.value[name] = el;
         }
     }
 
     /**
-     * 初始化表单
+     * @description 初始化表单
      */
     function initForm() {
         props.schemaList.forEach((item: FormItem) => {
@@ -47,7 +47,7 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
     }
 
     /**
-     * 重新设置校验字段
+     * @description 重新设置校验字段
      */
     function resetRules() {
         rules.value = {};
@@ -59,7 +59,8 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
     }
 
     /**
-     * 处理子组件的回调
+     * @description 处理子组件的回调
+     * @param item value是回调的值，formItem为回调的表单项
      */
     function handleEmit(item: { value: string | number; formItem: FormItem }) {
         if (
@@ -73,9 +74,9 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
     }
 
     /**
-     * 下拉回调
+     * @description BaseSelect组件下拉回调
      * @param item value是选中的值，formItem为回调的表单项
-     * emit('handleSelectClear',params) 为清除选择项时的回调，params是整个表单项的值
+     * @description emit('handleSelectClear',params) 为清除选择项时的回调，params是整个表单项的值
      */
     async function handleSelect(item: { value: apiSelectType; formItem: FormItem; isClear?: boolean }) {
         handleBaseSelect(form.value, item);
@@ -92,6 +93,8 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
                 nextTick(() => {
                     resetRules();
                 });
+
+                updateComponentData();
             }
         }
 
@@ -110,11 +113,12 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
             nextTick(() => {
                 resetRules();
             });
+            updateComponentData();
         }
     }
 
     /**
-     * BaseInput组件扫码成功回调
+     * @description BaseInput组件扫码成功回调
      * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
      */
     async function handleScanInputSuccess(item: { value: object; formItem: FormItem; reset?: true }) {
@@ -140,13 +144,11 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
             });
         }
 
-        setComponentData();
-        componentRef = [];
-        console.log(form.value);
+        updateComponentData();
     }
 
     /**
-     * BaseInput组件扫码失败回调
+     * @description BaseInput组件扫码失败回调
      * @param item value是扫码查询后所返回的参数，formItem为回调的表单项
      */
     async function handleScanInputFail(item: { reset: boolean; formItem: FormItem; params?: formCheck }) {
@@ -161,6 +163,7 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
             nextTick(() => {
                 resetRules();
             });
+            updateComponentData();
         }
 
         if (!item.reset) {
@@ -180,18 +183,35 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
     }
 
     /**
-     *
+     * @description 选中日期后的回调
      * @param item value是日期选择器选中后的值，formItem为回调的表单项
      */
-    function handleDatePicker(item: { value: string; formItem: FormItem }) {
+    async function handleDatePicker(item: { value: string; formItem: FormItem }) {
         form.value[item.formItem.prop] = item.value;
+
+        // 日期需要联动，暴露 componentProps 方法
+        if (item.formItem.componentProps) {
+            await item.formItem.componentProps({
+                value: item.value,
+                formModel: form.value,
+                schema: props.schemaList,
+                formItem: item.formItem,
+                result: 'success',
+            });
+
+            nextTick(() => {
+                resetRules();
+            });
+
+            updateComponentData();
+        }
     }
 
     /**
-     * 重置表单
+     * @description 重置表单
+     * @param params 是否有表单项数据需要在重置时保留
      */
     function resetForm(params?: formCheck) {
-        let resetForm: formCheck = {};
         if (params) {
             form.value = {
                 ...form.value,
@@ -199,28 +219,39 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
             };
             return;
         }
-        props.schemaList.forEach((item: FormItem) => {
-            if (item.defaultValue) {
-                resetForm[`${item.prop}`] = item.defaultValue;
-            } else {
-                resetForm[`${item.prop}`] = '';
-            }
-        });
+        form.value = {};
+        rules.value = {};
+        initForm();
 
-        for (let i = 0; i < props.schemaList.length; i++) {
-            componentRef[i].setValue(resetForm[componentRef[i].getProp()]);
-        }
+        updateComponentData();
     }
 
     /**
-     * 设置表单值
+     * @description 更新表单值
      */
-    function setComponentData() {
-        for (let i = 0; i < props.schemaList.length; i++) {
-            if (componentRef[i].getProp() && form.value[componentRef[i].getProp()]) {
-                componentRef[i].setValue(form.value[componentRef[i].getProp()]);
+    function updateComponentData() {
+        props.schemaList.forEach((item: FormItem) => {
+            if (handleException(item)) {
+                instance.value[item.prop].setData(form.value[item.prop]);
             }
+        });
+    }
+
+    /**
+     * @description 处理个别组件prop为空string、null、或者是show为false等情况(比如divider、title等，他们的prop的没啥意义)
+     * @param item 表单项配置
+     * @return boolean
+     */
+    function handleException(item: FormItem) {
+        if (typeof item.show !== undefined && item.show === false) {
+            return false;
         }
+
+        if (item.prop === '' || item.prop === null) {
+            return false;
+        }
+
+        return true;
     }
 
     onBeforeMount(() => {
@@ -238,5 +269,7 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
         setComponentRef,
         handleScanInputFail,
         handleDatePicker,
+        updateComponentData,
+        resetForm,
     };
 }

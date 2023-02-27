@@ -50,10 +50,7 @@ const { inputValue, changeInputValue, confirm, focus, handlePDAScan, focusFuncti
 useScan(handlePDAScan);
 
 defineExpose({
-    getProp() {
-        return props.formItem.prop;
-    },
-    setValue(val: string | number) {
+    setData(val: string | number) {
         inputValue.value = val;
     },
 });

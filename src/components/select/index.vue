@@ -65,10 +65,7 @@ const {
 } = useIndex(props, emit);
 
 defineExpose({
-    getProp() {
-        return props.formItem.prop;
-    },
-    async setValue(val: string | number) {
+    async setData(val: string | number) {
         if (val === '') {
             selectValue.value = val;
             selectLabel.value = val;

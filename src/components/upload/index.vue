@@ -36,10 +36,7 @@ const emit = defineEmits<{
 
 const { fileList, afterRead, deletePicture, initFileList } = useIndex(props, emit);
 defineExpose({
-    getProp() {
-        return props.formItem.prop;
-    },
-    setValue(val: unknownType) {
+    setData(val: unknownType) {
         initFileList(val);
     },
 });
