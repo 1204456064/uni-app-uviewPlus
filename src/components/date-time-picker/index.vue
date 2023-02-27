@@ -56,10 +56,7 @@ const emit = defineEmits<{
 const { show, dateValue, showClear, placeholder, open, clearValue, cancel, confirm, mode } = useIndex(props, emit);
 
 defineExpose({
-    getProp() {
-        return props.formItem.prop;
-    },
-    async setValue(val: string | number) {
+    async setData(val: string | number) {
         if (val === '' || val === null) {
             return;
         }

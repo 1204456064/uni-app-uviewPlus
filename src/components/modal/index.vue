@@ -27,3 +27,8 @@ defineExpose({
     cancel,
 });
 </script>
+<style lang="scss">
+:deep(.u-modal__content__text) {
+    text-align: center;
+}
+</style>
