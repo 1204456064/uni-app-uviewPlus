@@ -10,3 +10,7 @@ npm install
 pnpm serve  
 yarn serve  
 npm run serve
+
+## 交流
+欢迎交流
+![](./src/static/wx.png)
