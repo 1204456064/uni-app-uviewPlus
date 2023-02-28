@@ -4,7 +4,7 @@ import { ScanInput } from './scan-input';
 import { DateTimePicker } from './date-time-picker';
 import { BaseUpload } from './upload';
 import { BaseRadio } from './radio';
-
+import TwoButton from './slots-omponent/TwoButton.vue';
 export const components: any = {
     BaseInput: BaseInput,
     BaseSelect: BaseSelect,
@@ -12,4 +12,5 @@ export const components: any = {
     DateTimePicker: DateTimePicker,
     BaseUpload: BaseUpload,
     BaseRadio: BaseRadio,
+    TwoButton: TwoButton,
 };

@@ -6,6 +6,13 @@ export default function conf() {
     const labelWidth = 200;
 
     const schemaList: FormItem[] = [
+        // 自定义组件，form会自动收集和赋值
+        {
+            prop: 'remark1',
+            label: '',
+            type: 'TwoButton',
+            attribute: { placeholder: '请输入', border: 'none' },
+        },
         {
             prop: 'cylinderStatus',
             label: '运行状态',

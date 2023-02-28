@@ -22,7 +22,7 @@ export interface FormItem {
     // BaseInput 基本输入框
     // BaseSelect 基本选择器(下拉框)
     // ScanInput 带扫码的输入框
-    type: 'BaseInput' | 'BaseSelect' | 'ScanInput' | 'DateTimePicker' | 'BaseUpload' | 'BaseRadio';
+    type: 'BaseInput' | 'BaseSelect' | 'ScanInput' | 'DateTimePicker' | 'BaseUpload' | 'BaseRadio' | 'TwoButton';
     labelField?: string | number;
     // commonScanningCode 普通扫码模式 扫码后返回结果、扫码失败后不重置表单
     // commonScanningCodeAndClear 普通扫码模式 扫码后返回结果、失败后会重置表单

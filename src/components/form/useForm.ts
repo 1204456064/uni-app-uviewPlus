@@ -224,6 +224,19 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
         initForm();
 
         updateComponentData();
+
+        handleSlotsCompoent();
+    }
+
+    /**
+     * @description 特殊组件重新赋值(例如插槽组件)
+     */
+    function handleSlotsCompoent() {
+        props.schemaList.forEach((item: FormItem) => {
+            if (handleException(item) && typeof instance.value[item.prop]?.resetData === 'function') {
+                instance.value[item.prop].resetData();
+            }
+        });
     }
 
     /**
@@ -254,6 +267,19 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
         return true;
     }
 
+    /**
+     * @description 获取组件的值(主要是插槽)
+     */
+    function getData() {
+        props.schemaList.forEach((item: FormItem) => {
+            if (handleException(item) && typeof instance.value[item.prop]?.getData === 'function') {
+                form.value[item.prop] = instance.value[item.prop].getData();
+            }
+        });
+
+        return form.value;
+    }
+
     onBeforeMount(() => {
         initForm();
     });
@@ -272,5 +298,6 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
         updateComponentData,
         resetForm,
         instance,
+        getData,
     };
 }

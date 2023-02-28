@@ -77,6 +77,7 @@ const {
     updateComponentData,
     resetForm,
     instance,
+    getData,
 } = useForm(props, emit);
 
 defineExpose({
@@ -89,7 +90,7 @@ defineExpose({
     },
 
     getData() {
-        return form.value;
+        return getData();
     },
 
     resetForm() {
