@@ -271,5 +271,6 @@ export default function useIndex(props: { schemaList: FormItem[] }, emit: Functi
         handleDatePicker,
         updateComponentData,
         resetForm,
+        instance,
     };
 }

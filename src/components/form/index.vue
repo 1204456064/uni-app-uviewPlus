@@ -76,6 +76,7 @@ const {
     handleDatePicker,
     updateComponentData,
     resetForm,
+    instance,
 } = useForm(props, emit);
 
 defineExpose({
@@ -93,6 +94,10 @@ defineExpose({
 
     resetForm() {
         resetForm();
+    },
+
+    getInstance() {
+        return instance.value;
     },
 });
 </script>
