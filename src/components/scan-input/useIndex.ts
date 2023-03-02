@@ -10,16 +10,12 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     // 输入框聚焦属性
     const focus = ref<boolean>(false);
 
-    /**
-     * 输入框聚焦记录当前表单项可调用扫码
-     */
+    // 输入框聚焦记录当前表单项可调用扫码
     function focusFunction() {
         scanItem.value = true;
     }
 
-    /**
-     * 输入框失焦将当前可扫码置为否，扫码后不调用此项的查询接口
-     */
+    // 输入框失焦将当前可扫码置为否，扫码后不调用此项的查询接口
     function blurFunction() {
         scanItem.value = false;
     }
@@ -36,7 +32,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     >('commonScanningCode');
 
     /**
-     * 输入框的值改变后回调修改表单对应字段的值
+     * @description 输入框的值改变后回调修改表单对应字段的值
      * @param e 输入框改变后的值
      */
     function changeInputValue(e: string | number) {
@@ -50,9 +46,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         emit('handleEmit', { value: e, formItem: props.formItem });
     }
 
-    /**
-     * 输入框后点击回车事件
-     */
+    // 输入框后点击回车事件
     function confirm() {
         if (inputValue.value === '') {
             showToast('当前输入框的值为空');
@@ -63,7 +57,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     * 处理扫码枪扫码事件
+     * @description 处理扫码枪扫码事件
      * @param code 扫码后返回的code
      */
     function handlePDAScan(code: string) {
@@ -76,7 +70,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     * 扫码或者确认后方法
+     * @description 扫码或者确认后方法
      * @param code 输入框的值
      */
     async function searchCylinderCode(code: defaultValueCheck) {
@@ -107,8 +101,8 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     * 查询成功处理
-     * 根据不同的扫码模式进行不同的处理
+     * @description 查询成功处理
+     * @param request 根据不同的扫码模式进行不同的处理
      */
     function handleScanSuccess(request: requestObj) {
         if (scanMode.value === SCAN_MODE.MODE_ONE || scanMode.value === SCAN_MODE.MODE_TWO) {
@@ -123,8 +117,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     * 查询失败或者异常处理
-     * 根据不同的扫码模式进行不同的处理
+     * @description 查询失败或者异常处理
      */
     function handleScanError() {
         if (scanMode.value === SCAN_MODE.MODE_ONE) {
@@ -154,9 +147,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         resetFocus();
     }
 
-    /**
-     * 扫码处理
-     */
+    // 扫码处理
     function handleScan() {
         // 清空条码
         inputValue.value = '';
@@ -186,9 +177,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         });
     }
 
-    /**
-     * 重置表单
-     */
+    // 重置表单
     function resetFocus() {
         if (scanItem.value) {
             console.log('我重置了');

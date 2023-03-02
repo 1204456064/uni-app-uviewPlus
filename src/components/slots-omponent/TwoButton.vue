@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { FormItem } from '../schema';
-const props = withDefaults(
+withDefaults(
     defineProps<{
         formItem: FormItem;
     }>(),

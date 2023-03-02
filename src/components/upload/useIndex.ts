@@ -10,7 +10,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     const uploadValue = ref<string>('');
 
     /**
-     * 读取图片后的处理函数
+     * @description 读取图片后的处理函数
      * @param e index，name，flie
      */
     async function afterRead(e: { file: unknownType; name: string; index: number }) {
@@ -44,7 +44,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     *
+     *@description 上传函数
      * @param url 上传
      * @returns 返回的参数
      */
@@ -66,7 +66,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     * 移除图片回调
+     * @description 移除图片回调
      * @param e 当前项的index，name，flie
      */
     function deletePicture(e: unknownType) {
@@ -76,7 +76,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     * 用于处理表单赋值或者是默认值，将其转化为可渲染的数据
+     * @description 用于处理表单赋值或者是默认值，将其转化为可渲染的数据
      * @param value 图片地址
      */
     function initFileList(value: unknownType) {

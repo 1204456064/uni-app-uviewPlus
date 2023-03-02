@@ -7,7 +7,10 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     //单选框选项列表
     const radioList = ref<baseRadioCheck[]>([]);
 
-    //radioChange方法
+    /**
+     * @description 选中的回调
+     * @param item 选中的配置项
+     */
     function radioChange(item: { label: string; value: string | number }) {
         radioValue.value = item.value;
         emit('handleEmit', { value: radioValue.value, formItem: props.formItem });

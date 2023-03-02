@@ -33,9 +33,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     // 选择器的实例
     const pickerRef = ref();
 
-    /**
-     * 打开选择器
-     */
+    // 打开选择器
     async function open() {
         show.value = true;
         loading.value = true;
@@ -46,15 +44,13 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         loading.value = false;
     }
 
-    /**
-     * 关闭选择器
-     */
+    // 关闭选择器
     function cancel() {
         show.value = false;
     }
 
     /**
-     * 点击确认后的回调
+     * @description 点击确认后的回调
      * @param e 点击确认后的回调，参数为indexs下标、value选中的项、values数据源
      */
     function confirm(e: { indexs: number[]; value: apiSelectType[]; values: apiSelectType[] }) {
@@ -76,7 +72,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
 
     /**
      * uviewPlus的bug
-     * 当清空第一项时，在继续选择第一项会报错,这时候的回调参数为undefined，需特殊处理
+     * @description 当清空第一项时，在继续选择第一项会报错,这时候的回调参数为undefined，需特殊处理
      */
     function fixSelectBug() {
         emit('handleSelect', { value: selectList.value[0][0], formItem: props.formItem });
@@ -84,9 +80,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         cancel();
     }
 
-    /**
-     *  下拉数据处理
-     */
+    // 下拉数据处理sss
     async function handleSelectList() {
         // selectApi为请求接口下拉
         // options 为自定义下拉
@@ -112,7 +106,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
     }
 
     /**
-     * 给当前项赋值并且记录当前选中的下标
+     * @description 给当前项赋值并且记录当前选中的下标
      * @param value 下拉的value值
      */
     function handleSelectIndex(value: string | number | boolean | object) {
@@ -146,9 +140,7 @@ export default function useIndex(props: { formItem: FormItem }, emit: Function) 
         selectValue.value = value;
     }
 
-    /**
-     * 清除按钮
-     */
+    // 清除按钮
     function clearValue() {
         selectLabel.value = '';
         selectValue.value = '';
